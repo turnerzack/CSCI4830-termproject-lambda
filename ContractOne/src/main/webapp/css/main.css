@@ -43,13 +43,22 @@ body {
 }
 
 .div-2 {
-	color: rgb(128, 128, 128);
-    font-size: 22px;
+   color: rgb(240, 119, 45);
+  text-decoration: none;
+
+}
+
+.div-3 {
+   color: rgb(38, 19, 7);
+  text-decoration: none;
+  
+     font-size: 12px;
     font-weight: 600;
     letter-spacing: 2px;
     margin: 0;
     text-transform: uppercase;
     padding-bottom: 60px;
+
 }
 
 .content{
@@ -58,7 +67,7 @@ body {
 }
 a, a:focus, a:hover{
     text-decoration: none !important;
-    color:#fff !important;
+    color:rgb(68, 68, 68) !important;
 }
 .placeholder-fix:focus::-webkit-input-placeholder  {color:transparent !important; }
 .placeholder-fix:focus::-moz-placeholder   {color:transparent !important;}
@@ -72,13 +81,19 @@ a, a:focus, a:hover{
 
 
 .whitebox {
-  background: white;
+  background: rgb(232, 232, 232);
   padding: 15px;
   border-radius: 3px;
 }
 
+.greybox {
+  background: rgb(232, 232, 232);
+  padding: 1px;
+  border-radius: 300px;
+}
+
 .logo h2 {
-    color: #fff;
+    color: rgb(83, 83, 83);
     font-size: 22px;
     font-weight: 600;
     letter-spacing: 2px;
@@ -99,6 +114,38 @@ a, a:focus, a:hover{
     color: #403055;
     font-weight: 600;
     border-radius: 5px 5px 0 0;
+}
+
+form {
+  box-sizing: border-box;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: hsl(0, 0%, 100%);
+  border: 4px solid hsl(0, 0%, 90%);
+  margin: auto;
+  display: block;
+  
+  gap: 15pt;
+  height: 300px;
+    width: 700px;
+    margin: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+form2 {
+  box-sizing: border-box;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: hsl(0, 0%, 100%);
+  border: 4px solid hsl(0, 0%, 90%);
+
+  gap: 15pt;
+  height: 50px;
+    width: 700px;
+    margin: 10px;
+    margin-top: 10px;
+    text-align: center;
+
 }
 
 .loginpage input:nth-child(-n + 5){
@@ -147,7 +194,7 @@ a, a:focus, a:hover{
 .action-button .btn-block {
     background-color: rgba(64,48,85,0.9);
     border: medium none;
-    color: #fff;
+    color: rgb(88, 88, 88);
     font-size: 20px;
     font-weight: 600;
     height: 60px;
