@@ -57,7 +57,7 @@ public class CreateNewUser extends HttpServlet {
 		
 		if (usertype == "Customer")
 		{
-			insertSQL = "INSERT INTO customer (id, name, address, phone, email, description, password) values (default, ?, ?, ?, ?, ?, ?)";
+			insertSQL = "INSERT INTO customer (id, name, address, phone, email, description, ) values (default, ?, ?, ?, ?, ?)";
 			try {
 		         DBConnection.getDBConnection();
 		         connection = DBConnection.connection;
@@ -67,7 +67,6 @@ public class CreateNewUser extends HttpServlet {
 		         preparedStmt.setString(3, phone);
 		         preparedStmt.setString(4, email);
 		         preparedStmt.setString(5, description);
-		         preparedStmt.setString(6, password);
 		         preparedStmt.execute();
 		      } 
 			
@@ -78,7 +77,7 @@ public class CreateNewUser extends HttpServlet {
 		}
 		else
 		{
-			insertSQL = "INSERT INTO contractor (id, name, address, phone, email, description, password) values (default, ?, ?, ?, ?, ?, ?)";
+			insertSQL = "INSERT INTO contractor (id, name, address, phone, email, description) values (default, ?, ?, ?, ?, ?)";
 			try {
 		         DBConnection.getDBConnection();
 		         connection = DBConnection.connection;
@@ -88,7 +87,6 @@ public class CreateNewUser extends HttpServlet {
 		         preparedStmt.setString(3, phone);
 		         preparedStmt.setString(4, email);
 		         preparedStmt.setString(5, description);
-		         preparedStmt.setString(6, password);
 		         preparedStmt.execute();
 		      } 
 			
@@ -97,6 +95,7 @@ public class CreateNewUser extends HttpServlet {
 		         e.printStackTrace();
 		    }
 		}
+		response.sendRedirect("Login.html");
 	}
 
 	/**
