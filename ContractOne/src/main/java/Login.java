@@ -34,17 +34,35 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// get the session, add argument `true` to create a session if one is not yet created.
+		HttpSession session = request.getSession();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		try {
-	         DBConnection.getDBConnection();
-	         connection = DBConnection.connection;
-	         String selectSQL = "SELECT * FROM userlist WHERE email LIKE ?";
-	         String completed = request.getParameter("email");	         
-	         preparedStatement = connection.prepareStatement(selectSQL);
-	         preparedStatement.setString(1, completed);
-	         rs = preparedStatement.executeQuery();
+			DBConnection.getDBConnection();
+	        connection = DBConnection.connection;
+	        String selectSQL = "SELECT * FROM userlist WHERE email LIKE ?";
+	        String email = request.getParameter("email");	         
+	        preparedStatement = connection.prepareStatement(selectSQL);
+	        preparedStatement.setString(1, email);
+	        rs = preparedStatement.executeQuery();
+	        rs.next();
+			String password = request.getParameter("password");
+				if (password.compareTo(rs.getString("password")) == 0)
+				{
+					if ("Contractor".compareTo(rs.getString("usertype")) == 0)
+					{
+						response.sendRedirect("contractor");
+					}
+					else
+					{
+						response.sendRedirect("customer");
+					}
+				}
+				else
+				{
+					response.sendRedirect("Signup.html");
+				}
 		}
 	    catch (SQLException se) 
 	    {
@@ -68,29 +86,8 @@ public class Login extends HttpServlet {
 	        
 	    	}
 	     }
-		try {
-			rs.next();
-			String password = request.getParameter("password");
-			if (rs.getString("password") == password)
-			{
-				if (rs.getString("usertype") == "Contractor")
-				{
-					response.sendRedirect("contractor");
-				}
-				else
-				{
-					response.sendRedirect("customer");
-				}
-			}
-			else
-			{
-				response.sendRedirect("Login.html");
-			}
-		} catch (SQLException e) {
-			response.sendRedirect("Login.html");
-		}
 		
-		HttpSession session = request.getSession(true);
+		
 
 		session.setAttribute("email", request.getParameter("email"));
 		
