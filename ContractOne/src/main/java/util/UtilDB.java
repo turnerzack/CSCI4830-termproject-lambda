@@ -9,13 +9,11 @@ import java.util.Iterator;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
 
-import datamodel.Employee;
+import datamodel.Customer;
+import datamodel.Contractor;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -35,18 +33,17 @@ public class UtilDB {
       return sessionFactory;
    }
 
-   public static List<Employee> listEmployees() {
-      List<Employee> resultList = new ArrayList<Employee>();
+   public static List<Customer> listCustomers() {
 
+      List<Customer> resultList = new ArrayList<Customer>();
       Session session = getSessionFactory().openSession();
       Transaction tx = null;  // each process needs transaction and commit the changes in DB.
-
       try {
          tx = session.beginTransaction();
-         List<?> employees = session.createQuery("FROM Employee").list();
-         for (Iterator<?> iterator = employees.iterator(); iterator.hasNext();) {
-            Employee employee = (Employee) iterator.next();
-            resultList.add(employee);
+         List<?> customers = session.createQuery("FROM Customer").list();
+         for (Iterator<?> iterator = customers.iterator(); iterator.hasNext();) {
+            Customer customer = (Customer) iterator.next();
+            resultList.add(customer);
          }
          tx.commit();
       } catch (HibernateException e) {
@@ -59,21 +56,41 @@ public class UtilDB {
       return resultList;
    }
 
-   public static List<Employee> listEmployees(String keyword) {
-      List<Employee> resultList = new ArrayList<Employee>();
+   public static List<Contractor> listContractors() {
+	      List<Contractor> resultList = new ArrayList<Contractor>();
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;  // each process needs transaction and commit the changes in DB.
+	      try {
+	         tx = session.beginTransaction();
+	         List<?> contractors = session.createQuery("FROM Contractor").list();
+	         for (Iterator<?> iterator = contractors.iterator(); iterator.hasNext();) {
+	            Contractor contractor = (Contractor) iterator.next();
+	            resultList.add(contractor);
+	         }
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	      return resultList;
+	   }
 
+   public static List<Customer> listCustomers(String keyword) {
+
+      List<Customer> resultList = new ArrayList<Customer>();
       Session session = getSessionFactory().openSession();
       Transaction tx = null;
-
       try {
          tx = session.beginTransaction();
-         System.out.println((Employee)session.get(Employee.class, 1)); // use "get" to fetch data
-        // Query q = session.createQuery("FROM Employee");
-         List<?> employees = session.createQuery("FROM Employee").list();
-         for (Iterator<?> iterator = employees.iterator(); iterator.hasNext();) {
-            Employee employee = (Employee) iterator.next();
-            if (employee.getName().startsWith(keyword)) {
-               resultList.add(employee);
+         System.out.println((Customer)session.get(Customer.class, 1)); // use "get" to fetch data
+         List<?> customers = session.createQuery("FROM Customer").list();
+         for (Iterator<?> iterator = customers.iterator(); iterator.hasNext();) {
+            Customer customer = (Customer) iterator.next();
+            if (customer.getEmail().startsWith(keyword)) {
+               resultList.add(customer);
             }
          }
          tx.commit();
@@ -86,20 +103,61 @@ public class UtilDB {
       }
       return resultList;
    }
+  
+   public static List<Contractor> listContractors(String keyword) {
+	   List<Contractor> resultList = new ArrayList<Contractor>();
+	   Session session = getSessionFactory().openSession();
+	   Transaction tx = null;
+	   try {
+		   tx = session.beginTransaction();
+	       System.out.println((Contractor)session.get(Contractor.class, 1)); // use "get" to fetch data
+	       List<?> contractors = session.createQuery("FROM Contractor").list();
+	       for (Iterator<?> iterator = contractors.iterator(); iterator.hasNext();) {
+	          Contractor contractor = (Contractor) iterator.next();
+	          if (contractor.getEmail().startsWith(keyword)) {
+	             resultList.add(contractor);
+	          }
+	       }
+	       tx.commit();
+	   } catch (HibernateException e) {
+	       if (tx != null)
+	          tx.rollback();
+	       e.printStackTrace();
+	   } finally {
+	       session.close();
+	   }
+	   return resultList;
+   }
 
-   public static void createEmployees(String userName, String age) {
-      Session session = getSessionFactory().openSession();
-      Transaction tx = null;
-      try {
-         tx = session.beginTransaction();
-         session.save(new Employee(userName, Integer.valueOf(age)));
-         tx.commit();
-      } catch (HibernateException e) {
-         if (tx != null)
-            tx.rollback();
-         e.printStackTrace();
-      } finally {
-         session.close();
-      }
+   public static void createCustomer(String name, String address, String phone, String email, String description, String password) {
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;
+	      try {  
+	         tx = session.beginTransaction();
+	         session.save(new Customer(name, address, phone, email, description, password));
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+   }
+      
+   public static void createContractor(String business, String address, String phone, String email, String description, String password) {
+          Session session = getSessionFactory().openSession();
+          Transaction tx = null;
+          try {  
+             tx = session.beginTransaction();
+             session.save(new Contractor(business, address, phone, email, description, password));
+             tx.commit();
+          } catch (HibernateException e) {
+             if (tx != null)
+                tx.rollback();
+             e.printStackTrace();
+          } finally {
+             session.close();
+          }
    }
 }

@@ -8,12 +8,13 @@
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="hibernate.connection.url">jdbc:mysql://ec2-3-145-177-99.us-east-2.compute.amazonaws.com:3306/project</property>
-		<property name="hibernate.connection.username">andrewgeringer</property>
+		<property name="hibernate.connection.username">lambdaremote</property>
 		<property name="hibernate.connection.password">Test@1234</property>
-		<!-- you can create and update the table if it is not in DB. If create, it create new table everytime-->
+		<!-- you can create and update the table if it is not in DB. If create, it create new table every time-->
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<!-- True you will see sql in console -->
 		<property name="show_sql">false</property>
-		<mapping class="datamodel.Employee" />
+		<mapping class="datamodel.Customer" />
+		<mapping class="datamodel.Contractor" />
 	</session-factory>
 </hibernate-configuration>
