@@ -14,7 +14,9 @@
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<!-- True you will see sql in console -->
 		<property name="show_sql">false</property>
-		<mapping class="datamodel.Customer" />
-		<mapping class="datamodel.Contractor" />
+		<mapping class="datamodel.Customer"/>
+		<mapping class="datamodel.Contractor"/>
+		<mapping class="datamodel.Job"/>
+		<mapping class="datamodel.Bid"/>
 	</session-factory>
 </hibernate-configuration>

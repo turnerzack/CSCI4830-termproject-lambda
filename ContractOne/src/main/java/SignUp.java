@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 import javax.servlet.ServletException;
@@ -7,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import datamodel.Contractor;
+import datamodel.Customer;
 import util.UtilDB;
 import util.Info;
 
@@ -35,16 +38,34 @@ public class SignUp extends HttpServlet implements Info{
 		String description = request.getParameter("description");
 		String password = request.getParameter("password");
 		String usertype = request.getParameter("usertype");
+		Boolean userExists = false;
 		
-		System.out.println("Usertype = " + usertype + ".");
-
-		if (Objects.equals(usertype, "Customer")) {
-		    UtilDB.createCustomer(name, address, phone, email, description, password);
+		List<Customer> customers = UtilDB.listCustomers();
+		List<Contractor> contractors = UtilDB.listContractors();
+		
+		for (Customer tmpCustomer : customers) {
+			if (Objects.equals(tmpCustomer.getEmail(), email)) {
+				userExists = true;
+				break;
+			}
 		}
-		else {
-		    UtilDB.createContractor(name, address, phone, email, description, password);
+		if (!userExists) {
+			for (Contractor tmpContractor : contractors) {
+				if (Objects.equals(tmpContractor.getEmail(), email)) {
+					userExists = true;
+					break;
+				}
+			}
 		}
-		response.sendRedirect("Login.html");
+		if (!userExists) {
+			if (Objects.equals(usertype, "Customer")) {
+			    UtilDB.createCustomer(name, address, phone, email, description, password);
+			}
+			else {
+			    UtilDB.createContractor(name, address, phone, email, description, password);
+			}
+			response.sendRedirect("Login.html");
+		}
 	}
 
 	/**

@@ -12,6 +12,8 @@ import org.hibernate.cfg.Configuration;
 
 import datamodel.Customer;
 import datamodel.Contractor;
+import datamodel.Job;
+import datamodel.Bid;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -78,6 +80,52 @@ public class UtilDB {
 	      return resultList;
 	   }
 
+   public static List<Job> listJobs() {
+
+	      List<Job> resultList = new ArrayList<Job>();
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;  // each process needs transaction and commit the changes in DB.
+	      try {
+	         tx = session.beginTransaction();
+	         List<?> jobs = session.createQuery("FROM Job").list();
+	         for (Iterator<?> iterator = jobs.iterator(); iterator.hasNext();) {
+	            Job job = (Job) iterator.next();
+	            resultList.add(job);
+	         }
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	      return resultList;
+	   }
+
+   public static List<Bid> listBids() {
+
+	      List<Bid> resultList = new ArrayList<Bid>();
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;  // each process needs transaction and commit the changes in DB.
+	      try {
+	         tx = session.beginTransaction();
+	         List<?> bids = session.createQuery("FROM Bid").list();
+	         for (Iterator<?> iterator = bids.iterator(); iterator.hasNext();) {
+	            Bid bid = (Bid) iterator.next();
+	            resultList.add(bid);
+	         }
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	      return resultList;
+	   }
+
    public static List<Customer> listCustomers(String keyword) {
 
       List<Customer> resultList = new ArrayList<Customer>();
@@ -129,6 +177,58 @@ public class UtilDB {
 	   return resultList;
    }
 
+   public static List<Job> listJobs(String keyword) {
+
+	      List<Job> resultList = new ArrayList<Job>();
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;
+	      try {
+	         tx = session.beginTransaction();
+	         System.out.println((Job)session.get(Job.class, 1)); // use "get" to fetch data
+	         List<?> jobs = session.createQuery("FROM Job").list();
+	         for (Iterator<?> iterator = jobs.iterator(); iterator.hasNext();) {
+	            Job job = (Job) iterator.next();
+	            if (job.getTitle().startsWith(keyword)) {
+	               resultList.add(job);
+	            }
+	         }
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	      return resultList;
+	   }
+
+   public static List<Bid> listBids(String keyword) {
+
+	      List<Bid> resultList = new ArrayList<Bid>();
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;
+	      try {
+	         tx = session.beginTransaction();
+	         System.out.println((Bid)session.get(Bid.class, 1)); // use "get" to fetch data
+	         List<?> bids = session.createQuery("FROM Bid").list();
+	         for (Iterator<?> iterator = bids.iterator(); iterator.hasNext();) {
+	            Bid bid = (Bid) iterator.next();
+	            if (bid.getAmount().startsWith(keyword)) {
+	               resultList.add(bid);
+	            }
+	         }
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	      return resultList;
+	   }
+  
    public static void createCustomer(String name, String address, String phone, String email, String description, String password) {
 	      Session session = getSessionFactory().openSession();
 	      Transaction tx = null;
@@ -160,4 +260,37 @@ public class UtilDB {
              session.close();
           }
    }
+
+   public static void createJob(String title, Integer customerPointer, String jobDescription) {
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;
+	      try {  
+	         tx = session.beginTransaction();
+	         session.save(new Job(title, customerPointer, jobDescription));
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+   }
+
+   public static void createBid(Integer jobPointer, String amount, Integer contractorPointer) {
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;
+	      try {  
+	         tx = session.beginTransaction();
+	         session.save(new Bid(jobPointer, amount, contractorPointer));
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+   }
+
 }
