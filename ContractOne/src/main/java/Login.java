@@ -17,7 +17,7 @@ import datamodel.Contractor;
  * Servlet implementation class Login
  */
 @WebServlet("/Login")
-public class Login extends HttpServlet implements Info{
+public class Login extends HttpServlet implements Info {
 	private static final long serialVersionUID = 1L;
     
 	/**
@@ -28,7 +28,7 @@ public class Login extends HttpServlet implements Info{
     }
     
     /**
-   	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)a
    	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
