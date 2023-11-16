@@ -11,7 +11,7 @@ import javax.persistence.Table;
  CREATE TABLE job (
   id INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(30) NOT NULL,
-  customerPointer INT NOT NULL,
+  email VARCHAR(30) NOT NULL,
   jobDescription VARCHAR(1000) NOT NULL,
   PRIMARY KEY (id));
  */
@@ -25,24 +25,24 @@ public class Job {
    private Integer id;
    @Column(name = "title")
    private String title;
-   @Column(name = "customerPointer")
-   private Integer customerPointer;
+   @Column(name = "email")
+   private String email;
    @Column(name = "jobDescription")
    private String jobDescription;
    
    public Job() {
    }
 
-   public Job(Integer id, String title, Integer customerPointer, String jobDescription) {
+   public Job(Integer id, String title, String email, String jobDescription) {
 	   this.id = id;
        this.title = title;
-       this.customerPointer = customerPointer;
+       this.email = email;
        this.jobDescription = jobDescription;
    }
 
-   public Job(String title, Integer customerPointer, String jobDescription) {
+   public Job(String title, String email, String jobDescription) {
 	   this.title = title;
-	   this.customerPointer = customerPointer;
+	   this.email = email;
 	   this.jobDescription = jobDescription;
    }
 
@@ -62,12 +62,12 @@ public class Job {
 	   this.title = title;
    }
    
-   public Integer getCustomerPointer() {
-	   return customerPointer;
+   public String email() {
+	   return email;
    }
    
-   public void setCustomerPointer(Integer customerPointer) {
-	   this.customerPointer = customerPointer;
+   public void setCustomerPointer(String email) {
+	   this.email = email;
    }
    
    public String getJobDescription() {
@@ -80,6 +80,6 @@ public class Job {
    
    @Override
    public String toString() {
-      return "Bid: " + this.id + ", " + this.title + ", " + this.customerPointer + ", " + this.jobDescription;
+      return "Bid: " + this.id + ", " + this.title + ", " + this.email + ", " + this.jobDescription;
    }
 }

@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import util.Info;
 import util.UtilDB;
@@ -31,6 +32,7 @@ public class Login extends HttpServlet implements Info {
    	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)a
    	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");		
 		Customer fCustomer = null;
@@ -55,8 +57,10 @@ public class Login extends HttpServlet implements Info {
 				}
 			}
 			if (fCustomer != null) {
+				session.setAttribute("email", request.getParameter("email"));
 				response.sendRedirect("Customer-Home.html");
 			} else if (fContractor != null) {
+				session.setAttribute("email", request.getParameter("email"));
 				response.sendRedirect("Contractor-Home.html");
 			} else {
 				System.out.println("Error, invalid login information");	

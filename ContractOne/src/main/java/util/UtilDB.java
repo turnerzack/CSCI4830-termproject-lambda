@@ -261,12 +261,12 @@ public class UtilDB {
           }
    }
 
-   public static void createJob(String title, Integer customerPointer, String jobDescription) {
+   public static void createJob(String title, String email, String jobDescription) {
 	      Session session = getSessionFactory().openSession();
 	      Transaction tx = null;
 	      try {  
 	         tx = session.beginTransaction();
-	         session.save(new Job(title, customerPointer, jobDescription));
+	         session.save(new Job(title, email, jobDescription));
 	         tx.commit();
 	      } catch (HibernateException e) {
 	         if (tx != null)
