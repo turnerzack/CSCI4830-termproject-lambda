@@ -277,7 +277,7 @@ public class UtilDB {
 	      }
    }
 
-   public static void createBid(Integer jobPointer, String amount, Integer contractorPointer) {
+   public static void createBid(Integer jobPointer, String amount, String contractorPointer) {
 	      Session session = getSessionFactory().openSession();
 	      Transaction tx = null;
 	      try {  
