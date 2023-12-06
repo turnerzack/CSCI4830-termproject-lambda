@@ -29,6 +29,8 @@ public class Job {
    private String email;
    @Column(name = "jobDescription")
    private String jobDescription;
+   @Column (name = "status")
+   private String status;
    
    public Job() {
    }
@@ -38,12 +40,14 @@ public class Job {
        this.title = title;
        this.email = email;
        this.jobDescription = jobDescription;
+       this.status = "open";
    }
 
    public Job(String title, String email, String jobDescription) {
 	   this.title = title;
 	   this.email = email;
 	   this.jobDescription = jobDescription;
+	   this.status = "open";
    }
 
    public Integer getId() {
@@ -56,6 +60,16 @@ public class Job {
    
    public String getTitle() {
 	   return title;
+   }
+   
+   public String getStatus()
+   {
+	   return this.status;
+   }
+   
+   public void setStatus(String status)
+   {
+	   this.status = status;
    }
    
    public void setTitle(String title) {
@@ -80,6 +94,6 @@ public class Job {
    
    @Override
    public String toString() {
-      return "Bid: " + this.id + ", " + this.title + ", " + this.email + ", " + this.jobDescription;
+      return "Bid: " + this.id + ", " + this.title + ", " + this.email + ", " + this.jobDescription + ", " + this.status;
    }
 }

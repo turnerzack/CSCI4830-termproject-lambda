@@ -1,8 +1,6 @@
 
 
 import java.io.IOException;
-
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import util.UtilDB;
 
 /**
- * Servlet implementation class GetPersonalJobs
+ * Servlet implementation class UpdateJob
  */
-@WebServlet("/GetPersonalJobs")
-public class GetPersonalJobs extends HttpServlet {
+@WebServlet("/UpdateJob")
+public class UpdateJob extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetPersonalJobs() {
+    public UpdateJob() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,7 +31,8 @@ public class GetPersonalJobs extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String email = (String) session.getAttribute("email");
-		
+		UtilDB.updateJob(Integer.parseInt(request.getParameter("jobPointer")), request.getParameter("status"));
+		response.sendRedirect("Customer-Home.html");
 	}
 
 	/**

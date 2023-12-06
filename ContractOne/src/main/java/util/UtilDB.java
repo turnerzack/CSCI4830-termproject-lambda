@@ -90,7 +90,10 @@ public class UtilDB {
 	         List<?> jobs = session.createQuery("FROM Job").list();
 	         for (Iterator<?> iterator = jobs.iterator(); iterator.hasNext();) {
 	            Job job = (Job) iterator.next();
-	            resultList.add(job);
+	            if (job.getStatus().equals("open"))
+	            {
+	            	resultList.add(job);
+	            }
 	         }
 	         tx.commit();
 	      } catch (HibernateException e) {
@@ -188,7 +191,7 @@ public class UtilDB {
 	         List<?> jobs = session.createQuery("FROM Job").list();
 	         for (Iterator<?> iterator = jobs.iterator(); iterator.hasNext();) {
 	            Job job = (Job) iterator.next();
-	            if (job.getTitle().startsWith(keyword)) {
+	            if (job.getTitle().contains(keyword) && job.getStatus().equals("open")) {
 	               resultList.add(job);
 	            }
 	         }
@@ -202,7 +205,34 @@ public class UtilDB {
 	      }
 	      return resultList;
 	   }
+   
+   public static List<Job> listPersonalJobs(String keyword) {
 
+	      List<Job> resultList = new ArrayList<Job>();
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;
+	      try {
+	         tx = session.beginTransaction();
+	         System.out.println((Job)session.get(Job.class, 1)); // use "get" to fetch data
+	         List<?> jobs = session.createQuery("FROM Job").list();
+	         for (Iterator<?> iterator = jobs.iterator(); iterator.hasNext();) {
+	            Job job = (Job) iterator.next();
+	            if (job.email().equals(keyword));
+	            {
+	            	resultList.add(job);
+	            }
+	         }
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	      return resultList;
+	   }
+   
    public static List<Bid> listBids(String keyword) {
 
 	      List<Bid> resultList = new ArrayList<Bid>();
@@ -214,9 +244,57 @@ public class UtilDB {
 	         List<?> bids = session.createQuery("FROM Bid").list();
 	         for (Iterator<?> iterator = bids.iterator(); iterator.hasNext();) {
 	            Bid bid = (Bid) iterator.next();
-	            if (bid.getAmount().startsWith(keyword)) {
+	            if (bid.getContractorPointer().equals(keyword)) {
 	               resultList.add(bid);
 	            }
+	         }
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	      return resultList;
+	   }
+
+   public static List<Bid> sortBidsByValue() {
+
+	      List<Bid> resultList = new ArrayList<Bid>();
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;
+	      try {
+	         tx = session.beginTransaction();
+	         System.out.println((Bid)session.get(Bid.class, 1)); // use "get" to fetch data
+	         List<?> bids = session.createQuery("FROM Bid").list();
+	         Bid currentBid = null;
+	         Bid previousBid = null;
+	         Bid bid = null;
+	         for (Iterator<?> iterator1 = bids.iterator(); iterator1.hasNext();)
+	         {
+	        	 for (Iterator<?> iterator2 = bids.iterator(); iterator2.hasNext();) {
+	        		 bid = (Bid) iterator2.next();
+	        		 if (currentBid == null)
+	        		 {
+	        			 currentBid = bid;
+	        		 }
+	        		 else if (previousBid == null)
+	        		 {
+	        			 if (Integer.parseInt(bid.getAmount()) < Integer.parseInt(currentBid.getAmount()))
+	        			 {
+	        				 currentBid = bid;
+	        			 }
+	        		 }
+	        		 else if (Integer.parseInt(bid.getAmount()) > Integer.parseInt(previousBid.getAmount()) && Integer.parseInt(bid.getAmount()) < Integer.parseInt(currentBid.getAmount())) {
+	        			 currentBid = bid;
+	        		 }
+	        		 if (Integer.parseInt(bid.getAmount()) > Integer.parseInt(previousBid.getAmount()) && Integer.parseInt(previousBid.getContractorPointer()) == Integer.parseInt(bid.getContractorPointer())){
+	        			 currentBid = bid;
+	        		 }
+	        	 }
+	        	 resultList.add(bid);
+	        	 previousBid = bid;
 	         }
 	         tx.commit();
 	      } catch (HibernateException e) {
@@ -291,6 +369,32 @@ public class UtilDB {
 	      } finally {
 	         session.close();
 	      }
+   }
+   
+   public static void updateJob(Integer jobPointer, String status)
+   {
+	   Session session = getSessionFactory().openSession();
+	   Transaction tx = null;
+	   List<Job> jobs = listJobs();
+	   for (Iterator<?> iterator = jobs.iterator(); iterator.hasNext();) {
+           Job job = (Job) iterator.next(); 
+           if (job.getId() == jobPointer)
+           {
+        	   try {  
+      	         tx = session.beginTransaction();
+      	         Job current = (Job) session.get(Job.class, jobPointer);
+      	         current.setStatus(status);
+      	         session.update(current);
+      	         tx.commit();
+      	      } catch (HibernateException e) {
+      	         if (tx != null)
+      	            tx.rollback();
+      	         e.printStackTrace();
+      	      } finally {
+      	         session.close();
+      	      }
+           }
+	   }
    }
 
 }

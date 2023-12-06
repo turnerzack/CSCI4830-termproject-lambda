@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 
 public class UtilProp {
    static final boolean _W = System.getProperty("os.name").toLowerCase().contains("windows");
-   static String _PROP_FILENAME_WIN_LOCAL = "C:\\Users\\alan6\\git\\CSCI4830-termproject-lambda.ContractOne\\src\\main\\webapp\\config.properties";
+   static String _PROP_FILENAME_WIN_LOCAL = "C:\\Users\\zackt\\workspaceCSCI4830-termproject\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\ContractOne\\config.properties";
    static String _PROP_FILENAME_OSX_LOCAL = "/YOUR_PATH/webproject/WebContent/config.properties";
    // * Remote server path
    static String _PROP_FILENAME_REMOTE = "/var/lib/tomcat9/webapps/ContractOne/config.properties";
@@ -31,7 +31,7 @@ public class UtilProp {
          inputStream = new FileInputStream(_PROP_FILENAME_REMOTE);
       }
       if (inputStream == null) {
-         throw new FileNotFoundException();
+         throw new FileNotFoundException(); 
       }
       prop.load(inputStream);
    } 

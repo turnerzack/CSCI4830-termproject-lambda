@@ -34,6 +34,7 @@ public class SubmitBid extends HttpServlet {
 		String bid = request.getParameter("bid");
 		Integer id = Integer.parseInt(request.getParameter("id"));
 		UtilDB.createBid(id, bid, email);
+		response.sendRedirect("contractor-Home.html");
 	}
 
 	/**
