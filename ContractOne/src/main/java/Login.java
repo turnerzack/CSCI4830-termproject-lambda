@@ -42,7 +42,7 @@ public class Login extends HttpServlet implements Info {
 
 		if (email != null && !email.isEmpty() && password != null && !password.isEmpty()) {
 			for (Customer tmpCustomer : customers) {
-				if (Objects.equals(tmpCustomer.getPassword(), password)) {
+				if (Objects.equals(tmpCustomer.getEmail(), email) && Objects.equals(tmpCustomer.getPassword(), password)) {
 					System.out.println(tmpCustomer.getName());
 					fCustomer = tmpCustomer;
 					break;
@@ -50,7 +50,7 @@ public class Login extends HttpServlet implements Info {
 			}
 			if (fCustomer == null) {
 				for (Contractor tmpContractor : contractors) {
-					if (Objects.equals(tmpContractor.getPassword(), password)) {
+					if (Objects.equals(tmpContractor.getEmail(), email) && Objects.equals(tmpContractor.getPassword(), password)) {
 						fContractor = tmpContractor;
 						break;
 					}
@@ -58,12 +58,12 @@ public class Login extends HttpServlet implements Info {
 			}
 			if (fCustomer != null) {
 				session.setAttribute("email", request.getParameter("email"));
-				response.sendRedirect("Customer-Home.html");
+				response.sendRedirect("Customer-Home.jsp");
 			} else if (fContractor != null) {
 				session.setAttribute("email", request.getParameter("email"));
-				response.sendRedirect("Contractor-Home.html");
+				response.sendRedirect("Contractor-Home.jsp");
 			} else {
-				System.out.println("Error, invalid login information");	
+				response.sendRedirect("Login.jsp");
 			}
 		}
 	}

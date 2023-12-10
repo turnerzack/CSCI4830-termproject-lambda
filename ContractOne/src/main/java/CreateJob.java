@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +33,9 @@ public class CreateJob extends HttpServlet {
 		String title = request.getParameter("name");
 		String description = request.getParameter("description");
 		UtilDB.createJob(title, email, description);
-		response.sendRedirect("Customer-Home.html");
+		
+		session.setAttribute("email", request.getParameter("email"));
+		response.sendRedirect("Customer-Home.jsp");
 	}
 
 	/**

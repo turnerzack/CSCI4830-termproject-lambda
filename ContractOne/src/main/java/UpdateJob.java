@@ -32,7 +32,7 @@ public class UpdateJob extends HttpServlet {
 		HttpSession session = request.getSession();
 		String email = (String) session.getAttribute("email");
 		UtilDB.updateJob(Integer.parseInt(request.getParameter("jobPointer")), request.getParameter("status"));
-		response.sendRedirect("Customer-Home.html");
+		response.sendRedirect("Customer-Home.jsp");
 	}
 
 	/**

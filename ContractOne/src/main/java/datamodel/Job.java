@@ -13,6 +13,7 @@ import javax.persistence.Table;
   title VARCHAR(30) NOT NULL,
   email VARCHAR(30) NOT NULL,
   jobDescription VARCHAR(1000) NOT NULL,
+  status VARCHAR(30) NOT NULL,
   PRIMARY KEY (id));
  */
 @Entity
@@ -62,25 +63,15 @@ public class Job {
 	   return title;
    }
    
-   public String getStatus()
-   {
-	   return this.status;
-   }
-   
-   public void setStatus(String status)
-   {
-	   this.status = status;
-   }
-   
    public void setTitle(String title) {
 	   this.title = title;
    }
    
-   public String email() {
+   public String getEmail() {
 	   return email;
    }
    
-   public void setCustomerPointer(String email) {
+   public void setEmail(String email) {
 	   this.email = email;
    }
    
@@ -92,8 +83,19 @@ public class Job {
 	   this.jobDescription = jobDescription;
    }
    
+   public String getStatus()
+   {
+	   return this.status;
+   }
+   
+   public void setStatus(String status)
+   {
+	   this.status = status;
+   }
+   
+   
    @Override
    public String toString() {
-      return "Bid: " + this.id + ", " + this.title + ", " + this.email + ", " + this.jobDescription + ", " + this.status;
+      return "Job: " + this.id + ", " + this.title + ", " + this.email + ", " + this.jobDescription + ", " + this.status;
    }
 }

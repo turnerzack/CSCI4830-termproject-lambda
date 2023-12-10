@@ -67,7 +67,7 @@ public class PasswordReset extends HttpServlet implements Info{
 				}
 			}
 			if (matchFound) {
-				response.sendRedirect("Login.html");
+				response.sendRedirect("Login.jsp");
 			}
 			tx.commit();
 		} catch (HibernateException e) {

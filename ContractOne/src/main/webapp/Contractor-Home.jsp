@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -16,27 +14,16 @@
     </head>
     <body class="content">
         <header>
-			
-			
 			<div id="header">
     <div id="header-content">
         <h1></h1>
         <p>Contractor Home Page</p>
     </div>
 </div>
-
-
-			
 			<div class="div-1">
 				
 				<h2>Review All Current and Past Bids Below</h2>
-
-				
 			</div>
-			
-			
-			
-			
 			  <div class="whitebox">
     <h1>Current Bids</h1>
   In Here we need to bring in the current bids as a table base on the contractor signed in 
@@ -47,28 +34,17 @@
   </div>
   
 <div class="div-2">
-	 <a href="/ContractOne/Job-Info.html" >Click Here To See Active Jobs</a>
-			
+	 <a href="/ContractOne/Job-Info.jsp" >Click Here To See Active Jobs</a>
 			</div>
-			
-			
-			
-			
-			
 			<div class="container">
-
-			
             <div class="logo text-center">
                 <h2></h2>
             </div>
         </header>
-        
             <div class="row">
-                
-              
                 <div class="copyright-box">
                     <div class="copyright">
-                        &copy; 2023 All right reserved. Designed by <strong>ContractOne</strong></a>
+                        &copy; 2023 All Rights Reserved. Designed by <strong>ContractOne</strong></a>
                     </div>
                 </div>
             </div>

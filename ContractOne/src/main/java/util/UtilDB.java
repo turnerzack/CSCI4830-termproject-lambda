@@ -180,32 +180,6 @@ public class UtilDB {
 	   return resultList;
    }
 
-   public static List<Job> listJobs(String keyword) {
-
-	      List<Job> resultList = new ArrayList<Job>();
-	      Session session = getSessionFactory().openSession();
-	      Transaction tx = null;
-	      try {
-	         tx = session.beginTransaction();
-	         System.out.println((Job)session.get(Job.class, 1)); // use "get" to fetch data
-	         List<?> jobs = session.createQuery("FROM Job").list();
-	         for (Iterator<?> iterator = jobs.iterator(); iterator.hasNext();) {
-	            Job job = (Job) iterator.next();
-	            if (job.getTitle().contains(keyword) && job.getStatus().equals("open")) {
-	               resultList.add(job);
-	            }
-	         }
-	         tx.commit();
-	      } catch (HibernateException e) {
-	         if (tx != null)
-	            tx.rollback();
-	         e.printStackTrace();
-	      } finally {
-	         session.close();
-	      }
-	      return resultList;
-	   }
-   
    public static List<Job> listPersonalJobs(String keyword) {
 
 	      List<Job> resultList = new ArrayList<Job>();
@@ -217,7 +191,7 @@ public class UtilDB {
 	         List<?> jobs = session.createQuery("FROM Job").list();
 	         for (Iterator<?> iterator = jobs.iterator(); iterator.hasNext();) {
 	            Job job = (Job) iterator.next();
-	            if (job.email().equals(keyword));
+	            if (job.getEmail().equals(keyword));
 	            {
 	            	resultList.add(job);
 	            }

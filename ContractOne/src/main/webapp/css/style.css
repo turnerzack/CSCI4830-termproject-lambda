@@ -101,7 +101,7 @@ a, a:focus, a:hover{
 .action-button .btn-block {
     background-color: rgba(64,48,85,0.9);
     border: medium none;
-    color: #fff;
+    color: rgb(255, 255, 255);
     font-size: 20px;
     font-weight: 600;
     height: 60px;
