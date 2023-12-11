@@ -155,7 +155,7 @@ datamodel.Job"%>
             <div class="row">
                 <div class="copyright-box">
                     <div class="copyright">
-                        &copy; 2023 All Rights Reserved. Designed by <strong>ContractOne</strong></a>
+                        <a>&copy; 2023 All Rights Reserved. Designed by <strong>ContractOne</strong></a>
                     </div>
                 </div>
             </div>
