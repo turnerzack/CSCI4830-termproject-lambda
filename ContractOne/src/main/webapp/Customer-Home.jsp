@@ -78,8 +78,8 @@ datamodel.Job"%>
 	<tr>
 	</tr>
 	<tr bgcolor="#FFFFFF">
+		<td><b> JobID </b></td>
 		<td><b> Title </b></td>
-		<td><b> Email </b></td>
 		<td><b> Description </b></td>
 		<td><b> Status </b></td>
 	</tr>
@@ -89,8 +89,8 @@ datamodel.Job"%>
 		%>
 		<tr bgcolor="#FFFFFF">
 
+		<td> <%=currJob.getId()%> </td>
 		<td> <%=currJob.getTitle()%> </td>
-		<td> <%=currJob.getEmail()%> </td>
 		<td> <%=currJob.getJobDescription()%> </td>
 		<td> <%=currJob.getStatus()%> </td>
 
@@ -113,8 +113,8 @@ datamodel.Job"%>
 	<tr>
 	</tr>
 	<tr bgcolor="#FFFFFF">
+		<td><b> JobID </b></td>
 		<td><b> Title </b></td>
-		<td><b> Email </b></td>
 		<td><b> Description </b></td>
 		<td><b> Status </b></td>
 	</tr>
@@ -122,9 +122,9 @@ datamodel.Job"%>
 	try{ 
 		for(Job currJob: closedJobs) { %>
 		<tr bgcolor="#FFFFFF">
-
+		
+		<td> <%=currJob.getId()%> </td>
 		<td> <%=currJob.getTitle()%> </td>
-		<td> <%=currJob.getEmail()%> </td>
 		<td> <%=currJob.getJobDescription()%> </td>
 		<td> <%=currJob.getStatus()%> </td>
 

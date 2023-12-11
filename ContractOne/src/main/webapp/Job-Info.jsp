@@ -1,6 +1,16 @@
-
-
 <!DOCTYPE html>
+
+<%@ page import="
+java.util.*,
+java.io.IOException,
+javax.servlet.ServletException,
+javax.servlet.annotation.WebServlet,
+javax.servlet.http.HttpServlet,
+javax.servlet.http.HttpServletRequest,
+javax.servlet.http.HttpServletResponse,
+javax.servlet.http.HttpSession,
+util.UtilDB,
+datamodel.Job"%>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -16,35 +26,48 @@
     </head>
     <body class="content">
         <header>
-			
-			
 			<div id="header">
     <div id="header-content">
         <h1></h1>
-        <p>Job Home Page</p>
+        <p>Job Viewer</p>
     </div>
 </div>
-
-
-			
-			<div class="div-1">
-				
-				<h2>Review All Available and Past Jobs</h2>
-
-				
-			</div>
-			
-			
-			
-			
-			  <div class="whitebox">
-    <h1>Current Available Jobs </h1>
-  Here we need to have all current jobs with a bid box and insert bid option
+<div class="whitebox">
+<%
+	
+    Job currentJob = (Job) request.getAttribute("job");
+  %>
+ <% if (currentJob != null) {%>
+	
+  <h2 align="center"></h2>
+	<table align="center" cellpadding="5" cellspacing="5" border="1">
+	<tr>
+	</tr>
+	<tr bgcolor="#FFFFFF">
+		<td><b> <%=currentJob.getTitle()%> </b></td>
+	</tr>
+	<%
+	
+	try{ 
+		%>
+		<tr bgcolor="#FFFFFF">
+		<td> <%=currentJob.getJobDescription()%> </td>
+		</tr>
+		<% 
+	} catch (Exception e) {
+		e.printStackTrace();
+	} %>
+		</table>
+	<% 
+	} 
+ 	
+	else {
+	%> none <% }%>
  <br>
-    <h1>Past Jobs</h1>
-   All past jobs and their final bids
-
   </div>
+
+			
+			
   
 <div class="div-2">
 	 <a href="/ContractOne/Contractor-Home.jsp" >Click Here To Return To Contractor Home</a>
@@ -55,10 +78,7 @@
                 <h2></h2>
             </div>
         </header>
-        
             <div class="row">
-                
-              
                 <div class="copyright-box">
                     <div class="copyright">
                         <a>&copy; 2023 All Rights Reserved. Designed by <strong>ContractOne</strong></a>

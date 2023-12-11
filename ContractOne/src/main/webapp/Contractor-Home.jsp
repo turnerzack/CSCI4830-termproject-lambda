@@ -9,7 +9,7 @@ javax.servlet.http.HttpServletRequest,
 javax.servlet.http.HttpServletResponse,
 javax.servlet.http.HttpSession,
 util.UtilDB,
-datamodel.Bid"%>
+datamodel.Job"%>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -33,40 +33,37 @@ datamodel.Bid"%>
 </div>
 			<div class="div-1">
 				
-				<h2>Review All Current and Past Bids Below</h2>
+				<h2>See All Current Jobs Below</h2>
 			</div>
 			  <div class="whitebox">
-    <h1>Current Bids</h1>
   <%
-	List<Bid> allBids = UtilDB.listBids();
-	List<Bid> openBids = new ArrayList<>();
-	List<Bid> closedBids = new ArrayList<>();
+	List<Job> allJobs = UtilDB.listJobs();
+	List<Job> openBids = new ArrayList<>();
+	List<Job> closedBids = new ArrayList<>();
 	
 	
   %>
-  <% if (allBids.size() > 0) {%>
+  <% if (allJobs.size() > 0) {%>
 
   <h2 align="center"></h2>
 	<table align="center" cellpadding="5" cellspacing="5" border="1">
 	<tr>
 	</tr>
 	<tr bgcolor="#FFFFFF">
-		<td><b> Bid Id </b></td>
-		<td><b> Job Id </b></td>
-		<td><b> Amount </b></td>
-		<td><b> Contractor </b></td>
+		<td><b> JobID </b></td>
+		<td><b> Title </b></td>
+		<td><b> Customer Email </b></td>
 	</tr>
 	<%
 	try{ 
-		for(Bid currBid: allBids) {
+		for(Job currJob: allJobs) {
 		%>
 		<tr bgcolor="#FFFFFF">
-
-		<td> <%=currBid.getId()%> </td>
-		<td> <%=currBid.getJobPointer()%> </td>
-		<td> <%=currBid.getAmount()%> </td>
-		<td> <%=currBid.getContractorPointer()%> </td>
-
+		
+		<td> <%=currJob.getId()%> </td>
+		<td> <%=currJob.getTitle()%> </td>
+		<td> <%=currJob.getEmail()%> </td>
+		
 		</tr>
 
 		<% 
@@ -82,8 +79,19 @@ datamodel.Bid"%>
   </div>
   
 <div class="div-2">
-	 <a href="/ContractOne/Job-Info.jsp" >Click Here To See Active Jobs</a>
-			</div>
+<form action="JobInfo" method="post">
+	<label for="newsletter">Which Job would you like to learn more about?</label>
+		<br><br>
+		<div class="full-width">
+      <label for="name">JobID</label>
+      <input id="name" type="text" name = "name" />
+    </div>
+    <div class="action-button">
+      <button type="submit">Send Response</button>
+      <button type="reset">Clear Form</button>
+    </div> 
+  </form>
+</div>
 			<div class="container">
 			</div>
             <div class="logo text-center">

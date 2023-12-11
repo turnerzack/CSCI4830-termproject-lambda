@@ -7,4 +7,5 @@ public interface Info {
    public String PasswordReset = "PasswordReset.jsp";
    public String CustomerHome = "Customer-Home.jsp";
    public String ContractorHome = "Contractor-Home.jsp";
+   public String JobInfo = "Job-Info.jsp";
 }
