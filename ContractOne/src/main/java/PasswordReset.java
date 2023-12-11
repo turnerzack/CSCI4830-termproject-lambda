@@ -36,20 +36,20 @@ public class PasswordReset extends HttpServlet implements Info{
    	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		String email = request.getParameter("email");
-		String newPassword = request.getParameter("password");
+		String oldPassword = request.getParameter("oldPW");
+		String newPassword = request.getParameter("newPW");
+		System.out.println(email + ", " + oldPassword + ", " + newPassword);
 		Boolean matchFound = false;
 		List<Customer> customers = UtilDB.listCustomers();
-		List<Contractor> contractors = UtilDB.listContractors();
+		List<Contractor> contractors = UtilDB.listContractors();		
 		Session session = UtilDB.getSessionFactory().openSession();
-		Transaction tx = null;
+		Transaction tx = session.beginTransaction();
 		
-		try {
-			tx = session.beginTransaction();
-			
+		try {			
 			for (Customer tmpCustomer : customers) {
-				if (Objects.equals(tmpCustomer.getEmail(), email)) {
+				if (Objects.equals(tmpCustomer.getEmail(), email) && Objects.equals(tmpCustomer.getPassword(), oldPassword)) {
 					matchFound = true;
-					Customer customer = (Customer)session.get(Customer.class, tmpCustomer.getId());
+					Customer customer = (Customer)session.load(Customer.class, tmpCustomer.getId());
 					customer.setPassword(newPassword);
 					session.update(customer);
 					break;
@@ -57,9 +57,9 @@ public class PasswordReset extends HttpServlet implements Info{
 			}
 			if (!matchFound) {
 				for (Contractor tmpContractor : contractors) {
-					if (Objects.equals(tmpContractor.getEmail(), email)) {
+					if (Objects.equals(tmpContractor.getEmail(), email) && Objects.equals(tmpContractor.getPassword(), oldPassword)) {
 						matchFound = true;
-						Contractor contractor = (Contractor)session.get(Contractor.class, tmpContractor.getId());
+						Contractor contractor = (Contractor)session.load(Contractor.class, tmpContractor.getId());
 						contractor.setPassword(newPassword);
 						session.update(contractor);
 						break;
@@ -67,7 +67,10 @@ public class PasswordReset extends HttpServlet implements Info{
 				}
 			}
 			if (matchFound) {
-				response.sendRedirect("Login.html");
+				response.sendRedirect(Login);
+			}
+			else {
+				response.sendRedirect(PasswordReset);
 			}
 			tx.commit();
 		} catch (HibernateException e) {

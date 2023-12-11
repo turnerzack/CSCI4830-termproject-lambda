@@ -15,7 +15,6 @@
     <body class="content">
         <header>
 			<img src="images/logo.png" alt="Girl in a jacket" style="width:300px;height:100px;">
-
             <div class="logo text-center" img src="images/logo.png">
                 <h2></h2>
             </div>
@@ -44,12 +43,12 @@
             </div>
             <div class="row">
                 <ul class="page-links">
-                    <li><a href="PasswordReset.html">Forgot Password?</a></li>
-                    <li><a href="Login.html">Login</a></li>
+                    <li><a href="PasswordReset.jsp">Reset Password</a></li>
+                    <li><a href="Login.jsp">Login</a></li>
                 </ul>
                 <div class="copyright-box">
                     <div class="copyright">
-                                               &copy; 2023 All right reserved. Designed by <strong>ContractOne</strong></a>
+                    	<a> &copy; 2023 All Rights Reserved. Designed by <strong>ContractOne</strong></a>
                     </div>
                 </div>
             </div>

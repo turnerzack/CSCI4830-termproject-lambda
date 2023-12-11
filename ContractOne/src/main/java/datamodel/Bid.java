@@ -28,19 +28,19 @@ public class Bid {
    @Column(name = "amount")
    private String amount;
    @Column(name = "contractorPointer")
-   private Integer contractorPointer;
+   private String contractorPointer;
    
    public Bid() {
    }
 
-   public Bid(Integer id, Integer jobPointer, String amount, Integer contractorPointer) {
+   public Bid(Integer id, Integer jobPointer, String amount, String contractorPointer) {
       this.id = id;
       this.jobPointer = jobPointer;
       this.amount = amount;
       this.contractorPointer = contractorPointer;
    }
 
-   public Bid(Integer jobPointer, String amount, Integer contractorPointer) {
+   public Bid(Integer jobPointer, String amount, String contractorPointer) {
       this.jobPointer = jobPointer;
       this.amount = amount;
       this.contractorPointer = contractorPointer;
@@ -70,11 +70,11 @@ public class Bid {
 	   this.amount = amount;
    }
    
-   public Integer getContractorPointer() {
+   public String getContractorPointer() {
 	   return contractorPointer;
    }
    
-   public void setContractorPointer(Integer contractorPointer) {
+   public void setContractorPointer(String contractorPointer) {
 	   this.contractorPointer = contractorPointer;
    }
    

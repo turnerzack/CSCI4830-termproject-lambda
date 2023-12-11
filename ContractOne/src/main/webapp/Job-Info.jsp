@@ -47,7 +47,7 @@
   </div>
   
 <div class="div-2">
-	 <a href="/ContractOne/Contractor-Home.html" >Click Here To Return To Contractor Home</a>
+	 <a href="/ContractOne/Contractor-Home.jsp" >Click Here To Return To Contractor Home</a>
 			
 			</div>
 			
@@ -68,7 +68,7 @@
               
                 <div class="copyright-box">
                     <div class="copyright">
-                        &copy; 2023 All right reserved. Designed by <strong>ContractOne</strong></a>
+                        <a>&copy; 2023 All Rights Reserved. Designed by <strong>ContractOne</strong></a>
                     </div>
                 </div>
             </div>

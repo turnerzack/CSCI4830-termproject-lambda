@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import util.Info;
 import util.UtilDB;
@@ -31,6 +32,7 @@ public class Login extends HttpServlet implements Info {
    	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)a
    	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");		
 		Customer fCustomer = null;
@@ -40,26 +42,27 @@ public class Login extends HttpServlet implements Info {
 
 		if (email != null && !email.isEmpty() && password != null && !password.isEmpty()) {
 			for (Customer tmpCustomer : customers) {
-				if (Objects.equals(tmpCustomer.getPassword(), password)) {
-					System.out.println(tmpCustomer.getName());
+				if (Objects.equals(tmpCustomer.getEmail(), email) && Objects.equals(tmpCustomer.getPassword(), password)) {
 					fCustomer = tmpCustomer;
 					break;
 				}
 			}
 			if (fCustomer == null) {
 				for (Contractor tmpContractor : contractors) {
-					if (Objects.equals(tmpContractor.getPassword(), password)) {
+					if (Objects.equals(tmpContractor.getEmail(), email) && Objects.equals(tmpContractor.getPassword(), password)) {
 						fContractor = tmpContractor;
 						break;
 					}
 				}
 			}
 			if (fCustomer != null) {
-				response.sendRedirect("Customer-Home.html");
+				session.setAttribute("email", request.getParameter("email"));
+				response.sendRedirect(CustomerHome);
 			} else if (fContractor != null) {
-				response.sendRedirect("Contractor-Home.html");
+				session.setAttribute("email", request.getParameter("email"));
+				response.sendRedirect(ContractorHome);
 			} else {
-				System.out.println("Error, invalid login information");	
+				response.sendRedirect(Login);
 			}
 		}
 	}

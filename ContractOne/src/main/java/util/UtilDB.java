@@ -90,7 +90,10 @@ public class UtilDB {
 	         List<?> jobs = session.createQuery("FROM Job").list();
 	         for (Iterator<?> iterator = jobs.iterator(); iterator.hasNext();) {
 	            Job job = (Job) iterator.next();
-	            resultList.add(job);
+	            if (job.getStatus().equals("open"))
+	            {
+	            	resultList.add(job);
+	            }
 	         }
 	         tx.commit();
 	      } catch (HibernateException e) {
@@ -177,7 +180,7 @@ public class UtilDB {
 	   return resultList;
    }
 
-   public static List<Job> listJobs(String keyword) {
+   public static List<Job> listPersonalJobs(String keyword) {
 
 	      List<Job> resultList = new ArrayList<Job>();
 	      Session session = getSessionFactory().openSession();
@@ -188,8 +191,35 @@ public class UtilDB {
 	         List<?> jobs = session.createQuery("FROM Job").list();
 	         for (Iterator<?> iterator = jobs.iterator(); iterator.hasNext();) {
 	            Job job = (Job) iterator.next();
-	            if (job.getTitle().startsWith(keyword)) {
-	               resultList.add(job);
+	            if (job.getEmail().equals(keyword));
+	            {
+	            	resultList.add(job);
+	            }
+	         }
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	      return resultList;
+	   }
+   
+   public static List<Bid> listBids(String keyword) {
+
+	      List<Bid> resultList = new ArrayList<Bid>();
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;
+	      try {
+	         tx = session.beginTransaction();
+	         System.out.println((Bid)session.get(Bid.class, 1)); // use "get" to fetch data
+	         List<?> bids = session.createQuery("FROM Bid").list();
+	         for (Iterator<?> iterator = bids.iterator(); iterator.hasNext();) {
+	            Bid bid = (Bid) iterator.next();
+	            if (bid.getContractorPointer().equals(keyword)) {
+	               resultList.add(bid);
 	            }
 	         }
 	         tx.commit();
@@ -203,7 +233,7 @@ public class UtilDB {
 	      return resultList;
 	   }
 
-   public static List<Bid> listBids(String keyword) {
+   public static List<Bid> sortBidsByValue() {
 
 	      List<Bid> resultList = new ArrayList<Bid>();
 	      Session session = getSessionFactory().openSession();
@@ -212,11 +242,33 @@ public class UtilDB {
 	         tx = session.beginTransaction();
 	         System.out.println((Bid)session.get(Bid.class, 1)); // use "get" to fetch data
 	         List<?> bids = session.createQuery("FROM Bid").list();
-	         for (Iterator<?> iterator = bids.iterator(); iterator.hasNext();) {
-	            Bid bid = (Bid) iterator.next();
-	            if (bid.getAmount().startsWith(keyword)) {
-	               resultList.add(bid);
-	            }
+	         Bid currentBid = null;
+	         Bid previousBid = null;
+	         Bid bid = null;
+	         for (Iterator<?> iterator1 = bids.iterator(); iterator1.hasNext();)
+	         {
+	        	 for (Iterator<?> iterator2 = bids.iterator(); iterator2.hasNext();) {
+	        		 bid = (Bid) iterator2.next();
+	        		 if (currentBid == null)
+	        		 {
+	        			 currentBid = bid;
+	        		 }
+	        		 else if (previousBid == null)
+	        		 {
+	        			 if (Integer.parseInt(bid.getAmount()) < Integer.parseInt(currentBid.getAmount()))
+	        			 {
+	        				 currentBid = bid;
+	        			 }
+	        		 }
+	        		 else if (Integer.parseInt(bid.getAmount()) > Integer.parseInt(previousBid.getAmount()) && Integer.parseInt(bid.getAmount()) < Integer.parseInt(currentBid.getAmount())) {
+	        			 currentBid = bid;
+	        		 }
+	        		 if (Integer.parseInt(bid.getAmount()) > Integer.parseInt(previousBid.getAmount()) && Integer.parseInt(previousBid.getContractorPointer()) == Integer.parseInt(bid.getContractorPointer())){
+	        			 currentBid = bid;
+	        		 }
+	        	 }
+	        	 resultList.add(bid);
+	        	 previousBid = bid;
 	         }
 	         tx.commit();
 	      } catch (HibernateException e) {
@@ -261,12 +313,12 @@ public class UtilDB {
           }
    }
 
-   public static void createJob(String title, Integer customerPointer, String jobDescription) {
+   public static void createJob(String title, String email, String jobDescription) {
 	      Session session = getSessionFactory().openSession();
 	      Transaction tx = null;
 	      try {  
 	         tx = session.beginTransaction();
-	         session.save(new Job(title, customerPointer, jobDescription));
+	         session.save(new Job(title, email, jobDescription));
 	         tx.commit();
 	      } catch (HibernateException e) {
 	         if (tx != null)
@@ -277,7 +329,7 @@ public class UtilDB {
 	      }
    }
 
-   public static void createBid(Integer jobPointer, String amount, Integer contractorPointer) {
+   public static void createBid(Integer jobPointer, String amount, String contractorPointer) {
 	      Session session = getSessionFactory().openSession();
 	      Transaction tx = null;
 	      try {  
@@ -291,6 +343,32 @@ public class UtilDB {
 	      } finally {
 	         session.close();
 	      }
+   }
+   
+   public static void updateJob(Integer jobPointer, String status)
+   {
+	   Session session = getSessionFactory().openSession();
+	   Transaction tx = null;
+	   List<Job> jobs = listJobs();
+	   for (Iterator<?> iterator = jobs.iterator(); iterator.hasNext();) {
+           Job job = (Job) iterator.next(); 
+           if (job.getId() == jobPointer)
+           {
+        	   try {  
+      	         tx = session.beginTransaction();
+      	         Job current = (Job) session.get(Job.class, jobPointer);
+      	         current.setStatus(status);
+      	         session.update(current);
+      	         tx.commit();
+      	      } catch (HibernateException e) {
+      	         if (tx != null)
+      	            tx.rollback();
+      	         e.printStackTrace();
+      	      } finally {
+      	         session.close();
+      	      }
+           }
+	   }
    }
 
 }
