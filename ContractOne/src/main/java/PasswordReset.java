@@ -41,10 +41,7 @@ public class PasswordReset extends HttpServlet implements Info{
 		System.out.println(email + ", " + oldPassword + ", " + newPassword);
 		Boolean matchFound = false;
 		List<Customer> customers = UtilDB.listCustomers();
-		List<Contractor> contractors = UtilDB.listContractors();
-		
-		System.exit(0);
-		
+		List<Contractor> contractors = UtilDB.listContractors();		
 		Session session = UtilDB.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
 		
