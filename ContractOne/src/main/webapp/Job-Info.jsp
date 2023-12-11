@@ -48,16 +48,9 @@
   
 <div class="div-2">
 	 <a href="/ContractOne/Contractor-Home.jsp" >Click Here To Return To Contractor Home</a>
-			
 			</div>
-			
-			
-			
-			
-			
 			<div class="container">
-
-			
+            </div>
             <div class="logo text-center">
                 <h2></h2>
             </div>
@@ -72,7 +65,5 @@
                     </div>
                 </div>
             </div>
-        </div>
     </body>
-
 </html>

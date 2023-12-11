@@ -85,6 +85,7 @@ datamodel.Bid"%>
 	 <a href="/ContractOne/Job-Info.jsp" >Click Here To See Active Jobs</a>
 			</div>
 			<div class="container">
+			</div>
             <div class="logo text-center">
                 <h2></h2>
             </div>
@@ -92,11 +93,10 @@ datamodel.Bid"%>
             <div class="row">
                 <div class="copyright-box">
                     <div class="copyright">
-                        &copy; 2023 All Rights Reserved. Designed by <strong>ContractOne</strong></a>
+                        <a>&copy; 2023 All Rights Reserved. Designed by <strong>ContractOne</strong></a>
                     </div>
                 </div>
             </div>
-        </div>
     </body>
 
 </html>

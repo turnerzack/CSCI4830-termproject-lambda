@@ -31,20 +31,19 @@ datamodel.Job"%>
         <p>Customer Home Page</p>
     </div>
 </div>
-<form2>
-	<label for="newsletter">To Post a New Job, Fill Out the Form Below</label>
-  </form2>
 <form>
-		<br><br><br><br>
+	<label for="newsletter">To Post a New Job, Fill Out the Form Below</label>
+		<br><br>
 		<div class="full-width">
       <label for="name">Name of the Job</label>
       <input id="name" type="text" />
     </div>
+    <br>
     <div class="full-width">
       <label for="message">Description of the Job</label>
       <textarea id="message"></textarea>
     </div>
-  
+    <br>
     <div class="full-width">
       <button type="submit">Send Response</button>
       <button type="reset">Clear Form</button>
