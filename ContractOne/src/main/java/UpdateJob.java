@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,12 +7,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import util.UtilDB;
+import util.Info;
 
 /**
  * Servlet implementation class UpdateJob
  */
 @WebServlet("/UpdateJob")
-public class UpdateJob extends HttpServlet {
+public class UpdateJob extends HttpServlet implements Info {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -32,7 +31,7 @@ public class UpdateJob extends HttpServlet {
 		HttpSession session = request.getSession();
 		String email = (String) session.getAttribute("email");
 		UtilDB.updateJob(Integer.parseInt(request.getParameter("jobPointer")), request.getParameter("status"));
-		response.sendRedirect("Customer-Home.jsp");
+		response.sendRedirect(CustomerHome);
 	}
 
 	/**

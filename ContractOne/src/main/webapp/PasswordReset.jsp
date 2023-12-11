@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PasswordReset</title>
+        <title>Reset Password</title>
         <!-- Bootstrap core CSS -->
         <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i" rel="stylesheet">  
         <!-- Custom styles for this template -->
@@ -25,7 +25,8 @@
                     <form action="PasswordReset" method="post">
                         <div class="PasswordReset">
                             <input class="form-control placeholder-fix" type="text" placeholder="Email" name="email" required="">
-                            <input class="form-control placeholder-fix" type="text" placeholder="New Password" name="password" required="">
+                            <input class="form-control placeholder-fix" type="text" placeholder="Old Password" name="oldPW" required="">
+                            <input class="form-control placeholder-fix" type="text" placeholder="New Password" name="newPW" required="">
                         </div>
                        <div class="action-button">
                             <button class="btn-block" type="submit">Reset Password</button> 

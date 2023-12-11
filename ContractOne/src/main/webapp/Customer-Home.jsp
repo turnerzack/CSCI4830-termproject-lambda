@@ -141,17 +141,10 @@ datamodel.Job"%>
 	else {
 	%> None <%}%>
 
-  </div>
-  
-<div class="div-2">
-	 <a href="/ContractOne/Job-Info.jsp" >Click Here To Go To</a>
-			</div>
-			<div class="container">
-			</div>
-            <div class="logo text-center">
-                <h2></h2>
-            </div>
-        </header>
+  	</div>
+	<div class="div-2">
+	</div>
+      	</header>
             <div class="row">
                 <div class="copyright-box">
                     <div class="copyright">

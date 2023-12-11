@@ -8,12 +8,13 @@ import javax.servlet.http.HttpSession;
 
 import datamodel.Job;
 import util.UtilDB;
+import util.Info;
 
 /**
  * Servlet implementation class CreateJob
  */
 @WebServlet("/CreateJob")
-public class CreateJob extends HttpServlet {
+public class CreateJob extends HttpServlet implements Info {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -35,7 +36,7 @@ public class CreateJob extends HttpServlet {
 		UtilDB.createJob(title, email, description);
 		
 		session.setAttribute("email", request.getParameter("email"));
-		response.sendRedirect("Customer-Home.jsp");
+		response.sendRedirect(CustomerHome);
 	}
 
 	/**

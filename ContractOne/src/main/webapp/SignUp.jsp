@@ -43,7 +43,7 @@
             </div>
             <div class="row">
                 <ul class="page-links">
-                    <li><a href="PasswordReset.jsp">Forgot Password?</a></li>
+                    <li><a href="PasswordReset.jsp">Reset Password</a></li>
                     <li><a href="Login.jsp">Login</a></li>
                 </ul>
                 <div class="copyright-box">

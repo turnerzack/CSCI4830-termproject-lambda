@@ -43,7 +43,6 @@ public class Login extends HttpServlet implements Info {
 		if (email != null && !email.isEmpty() && password != null && !password.isEmpty()) {
 			for (Customer tmpCustomer : customers) {
 				if (Objects.equals(tmpCustomer.getEmail(), email) && Objects.equals(tmpCustomer.getPassword(), password)) {
-					System.out.println(tmpCustomer.getName());
 					fCustomer = tmpCustomer;
 					break;
 				}
@@ -58,12 +57,12 @@ public class Login extends HttpServlet implements Info {
 			}
 			if (fCustomer != null) {
 				session.setAttribute("email", request.getParameter("email"));
-				response.sendRedirect("Customer-Home.jsp");
+				response.sendRedirect(CustomerHome);
 			} else if (fContractor != null) {
 				session.setAttribute("email", request.getParameter("email"));
-				response.sendRedirect("Contractor-Home.jsp");
+				response.sendRedirect(ContractorHome);
 			} else {
-				response.sendRedirect("Login.jsp");
+				response.sendRedirect(Login);
 			}
 		}
 	}

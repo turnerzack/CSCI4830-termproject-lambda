@@ -6,11 +6,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import util.UtilDB;
+import util.Info;
+
 /**
  * Servlet implementation class GetAllJobs
  */
 @WebServlet("/GetAllJobs")
-public class GetAllJobs extends HttpServlet {
+public class GetAllJobs extends HttpServlet implements Info {
 	private static final long serialVersionUID = 1L;
        
     /**

@@ -5,4 +5,6 @@ public interface Info {
    public String SignUp = "SignUp.jsp";
    public String Login = "Login.jsp";
    public String PasswordReset = "PasswordReset.jsp";
+   public String CustomerHome = "Customer-Home.jsp";
+   public String ContractorHome = "Contractor-Home.jsp";
 }

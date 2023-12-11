@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,12 +7,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import util.UtilDB;
+import util.Info;
 
 /**
  * Servlet implementation class SubmitBid
  */
 @WebServlet("/SubmitBid")
-public class SubmitBid extends HttpServlet {
+public class SubmitBid extends HttpServlet implements Info {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -34,7 +33,7 @@ public class SubmitBid extends HttpServlet {
 		String bid = request.getParameter("bid");
 		Integer id = Integer.parseInt(request.getParameter("id"));
 		UtilDB.createBid(id, bid, email);
-		response.sendRedirect("Contractor-Home.jsp");
+		response.sendRedirect(ContractorHome);
 	}
 
 	/**

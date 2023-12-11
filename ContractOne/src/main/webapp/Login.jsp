@@ -37,7 +37,7 @@
             </div>
             <div class="row">
                 <ul class="page-links">
-                    <li><a href="PasswordReset.jsp">Forgot Password?</a></li>
+                    <li><a href="PasswordReset.jsp">Reset Password</a></li>
                     <li><a href="SignUp.jsp">Sign Up</a></li>
                 </ul>
               

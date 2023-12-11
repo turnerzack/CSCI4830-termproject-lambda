@@ -64,7 +64,7 @@ public class SignUp extends HttpServlet implements Info{
 			else {
 			    UtilDB.createContractor(name, address, phone, email, description, password);
 			}
-			response.sendRedirect("Login.jsp");
+			response.sendRedirect(Login);
 		}
 	}
 
