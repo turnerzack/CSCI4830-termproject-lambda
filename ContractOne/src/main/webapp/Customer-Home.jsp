@@ -31,17 +31,17 @@ datamodel.Job"%>
         <p>Customer Home Page</p>
     </div>
 </div>
-<form>
+<form action = "CreateJob", method = "post">
 	<label for="newsletter">To Post a New Job, Fill Out the Form Below</label>
 		<br><br>
 		<div class="full-width">
-      <label for="name">Name of the Job</label>
-      <input id="name" type="text" />
+      <label for="title">Name of the Job</label>
+      <input id="title" type="text" name = "title" />
     </div>
     <br>
     <div class="full-width">
       <label for="message">Description of the Job</label>
-      <textarea id="message"></textarea>
+      <textarea id="message" name = "message"></textarea>
     </div>
     <br>
     <div class="full-width">
@@ -142,6 +142,18 @@ datamodel.Job"%>
 
   	</div>
 	<div class="div-2">
+	<form action="GetBids" method="post">
+	<label for="newsletter">Which Job would you like to archive/view and accept bids for?</label>
+		<br><br>
+		<div class="full-width">
+      <label for="ID">JobID</label>
+      <input id="ID" type="text" name = "ID" />
+    </div>
+    <div class="action-button">
+      <button type="submit">Send Response</button>
+      <button type="reset">Clear Form</button>
+    </div> 
+  </form>
 	</div>
       	</header>
             <div class="row">

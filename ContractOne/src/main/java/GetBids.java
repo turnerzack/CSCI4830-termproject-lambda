@@ -1,4 +1,6 @@
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +31,11 @@ public class GetBids extends HttpServlet implements Info {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String email = (String) session.getAttribute("email");
+		session.setAttribute("ID", request.getParameter("ID"));
+		RequestDispatcher rd = request.getRequestDispatcher("View-Bids.jsp");
+		rd.forward(request, response);
+		response.sendRedirect("View-Bids.jsp");
+		
 	}
 
 	/**

@@ -31,11 +31,9 @@ public class CreateJob extends HttpServlet implements Info {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String email = (String) session.getAttribute("email");
-		String title = request.getParameter("name");
-		String description = request.getParameter("description");
+		String title = request.getParameter("title");
+		String description = request.getParameter("message");
 		UtilDB.createJob(title, email, description);
-		
-		session.setAttribute("email", request.getParameter("email"));
 		response.sendRedirect(CustomerHome);
 	}
 
