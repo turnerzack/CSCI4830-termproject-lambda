@@ -53,9 +53,9 @@ public class JobInfo extends HttpServlet {
 		{
 			
 			session.setAttribute("name", request.getParameter("name"));
-			RequestDispatcher rd = request.getRequestDispatcher("Job-Info.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("View-Bids.jsp");
 			rd.forward(request, response);
-			response.sendRedirect("Job-Info.jsp");
+			response.sendRedirect("View-Bids.jsp");
 		}
 	}
 

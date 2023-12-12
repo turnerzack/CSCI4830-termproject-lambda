@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import datamodel.Bid;
+import datamodel.Job;
 import util.Info;
 import util.UtilDB;
 
@@ -32,9 +35,18 @@ public class GetBids extends HttpServlet implements Info {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.setAttribute("ID", request.getParameter("ID"));
-		RequestDispatcher rd = request.getRequestDispatcher("View-Bids.jsp");
+		String forward = "View-Job.jsp";
+		List<Job> jobs = UtilDB.listJobs();
+		for (Job job : jobs)
+		{
+			if(job.getId() == Integer.parseInt((String) request.getParameter("ID")) && job.getStatus().equals("open"))
+			{
+				forward = "View-Bids.jsp";
+			}
+		}
+		RequestDispatcher rd = request.getRequestDispatcher(forward);
 		rd.forward(request, response);
-		response.sendRedirect("View-Bids.jsp");
+		response.sendRedirect(forward);
 		
 	}
 

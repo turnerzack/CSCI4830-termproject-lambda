@@ -10,13 +10,15 @@ javax.servlet.http.HttpServletRequest,
 javax.servlet.http.HttpServletResponse,
 javax.servlet.http.HttpSession,
 util.UtilDB,
-datamodel.Job"%>
+datamodel.Bid,
+datamodel.Contractor"%>
+
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Current Job</title>
+        <title>Current Bids</title>
         <!-- Bootstrap core CSS -->
         <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i" rel="stylesheet">  
         <!-- Custom styles for this template -->
@@ -29,49 +31,65 @@ datamodel.Job"%>
 			<div id="header">
     <div id="header-content">
         <h1></h1>
-        <p>Job Viewer</p>
+        <p>Bid Viewer</p>
     </div>
 </div>
 <div class="whitebox">
 <%
 	
-    List<Job> jobs = UtilDB.listJobs();
-    Job currentJob = null;
-    for (Job job : jobs)
-    {
-    	if(job.getId() == Integer.parseInt(request.getParameter("name")))
-    	{
-    		currentJob = job;
-    		break;
-    	}
-    }
+    List<Bid> bids = UtilDB.listBids(Integer.parseInt((String) request.getParameter("ID")));
+    List<Contractor> contractors = UtilDB.listContractors();
   %>
- <% if (currentJob != null) {%>
-	
+ <% if (bids.size() > 0) {%>
+
   <h2 align="center"></h2>
 	<table align="center" cellpadding="5" cellspacing="5" border="1">
 	<tr>
 	</tr>
 	<tr bgcolor="#FFFFFF">
-		<td><b> <%=currentJob.getTitle()%> </b></td>
+		<td><b> BidID </b></td>
+		<td><b> Value </b></td>
+		<td><b> Company Name </b></td>
+		<td><b> Company Email </b></td>
+		<td><b> Company Phone Number </b></td>
+		<td><b> Company Address </b></td>
 	</tr>
 	<%
-	
 	try{ 
-		%>
-		<tr bgcolor="#FFFFFF">
-		<td> <%=currentJob.getJobDescription()%> </td>
-		</tr>
-		<% 
+		for(Bid bid : bids) {
+			Contractor currentContractor = null;
+			for( Contractor contractor: contractors)
+			{
+				if(bid.getContractorPointer().equals(contractor.getEmail()))
+				{
+					currentContractor = contractor;
+					break;
+				}
+			}
+			if(bid.getStatus().equals("Accepted"))
+			{
+				%>
+				<tr bgcolor="#FFFFFF">
+
+				<td> <%=bid.getId()%> </td>
+				<td> <%=bid.getAmount()%> </td>
+				<td> <%=currentContractor.getBusiness()%> </td>
+				<td> <%=currentContractor.getEmail()%> </td>
+				<td> <%=currentContractor.getPhone()%> </td>
+				<td> <%=currentContractor.getAddress()%> </td>
+
+				</tr>
+
+				<% 
+			}
+		}
 	} catch (Exception e) {
 		e.printStackTrace();
 	} %>
 		</table>
-	<% 
-	} 
- 	
+	<% } 
 	else {
-	%> none <% }%>
+	%> None <%}%>
  <br>
   </div>
 
@@ -79,19 +97,7 @@ datamodel.Job"%>
 			
   
 <div class="div-2">
-<form action="SubmitBid" method="post">
-	<label for="newsletter">Would you like to submit a bid?</label>
-		<br><br>
-		<div class="full-width">
-      <label for="bid">Bid</label>
-      <input id="bid" type="text" name = "bid" />
-    </div>
-    <div class="action-button">
-      <button type="submit">Send Response</button>
-      <button type="reset">Clear Form</button>
-    </div> 
-  </form>
-	 <a href="/ContractOne/Contractor-Home.jsp" >Click Here To Return To Contractor Home</a>
+	 <a href="/ContractOne/Customer-Home.jsp" >Click Here To Return To Customer Home</a>
 			</div>
 			<div class="container">
             </div>

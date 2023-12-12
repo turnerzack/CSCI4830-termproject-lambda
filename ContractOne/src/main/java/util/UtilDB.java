@@ -232,6 +232,32 @@ public class UtilDB {
 	      }
 	      return resultList;
 	   }
+   
+   public static List<Bid> listBids(Integer jobPointer) {
+
+	      List<Bid> resultList = new ArrayList<Bid>();
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;
+	      try {
+	         tx = session.beginTransaction();
+	         System.out.println((Bid)session.get(Bid.class, 1)); // use "get" to fetch data
+	         List<?> bids = session.createQuery("FROM Bid").list();
+	         for (Iterator<?> iterator = bids.iterator(); iterator.hasNext();) {
+	            Bid bid = (Bid) iterator.next();
+	            if (bid.getJobPointer() == jobPointer) {
+	               resultList.add(bid);
+	            }
+	         }
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	      return resultList;
+	   }
 
    public static List<Bid> sortBidsByValue() {
 
@@ -369,6 +395,49 @@ public class UtilDB {
       	      }
            }
 	   }
+   }
+   
+   public static void updateBid(Integer bidPointer)
+   {
+	   Session session = getSessionFactory().openSession();
+	   Transaction tx = null;
+	   List<Bid> bids = listBids();
+	   for (Iterator<?> iterator = bids.iterator(); iterator.hasNext();) {
+           Bid bid = (Bid) iterator.next(); 
+           if (bid.getId() == bidPointer)
+           {
+        	   try {  
+      	         tx = session.beginTransaction();
+      	         Bid current = (Bid) session.get(Bid.class, bidPointer);
+      	         current.setStatus("Accepted");
+      	         session.update(current);
+      	         tx.commit();
+      	      } catch (HibernateException e) {
+      	         if (tx != null)
+      	            tx.rollback();
+      	         e.printStackTrace();
+      	      } finally {
+
+      	      }
+           }
+           else
+           {
+        	   try {  
+        	         tx = session.beginTransaction();
+        	         Bid current = (Bid) session.get(Bid.class, bid.getId());
+        	         current.setStatus("Rejected");
+        	         session.update(current);
+        	         tx.commit();
+        	      } catch (HibernateException e) {
+        	         if (tx != null)
+        	            tx.rollback();
+        	         e.printStackTrace();
+        	      } finally {
+
+        	      } 
+           }
+	   }
+	   session.close();
    }
 
 }

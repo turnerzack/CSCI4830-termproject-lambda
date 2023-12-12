@@ -143,7 +143,7 @@ datamodel.Job"%>
   	</div>
 	<div class="div-2">
 	<form action="GetBids" method="post">
-	<label for="newsletter">Which Job would you like to archive/view and accept bids for?</label>
+	<label for="newsletter">Which Job would you like to delete/view bids for?</label>
 		<br><br>
 		<div class="full-width">
       <label for="ID">JobID</label>
