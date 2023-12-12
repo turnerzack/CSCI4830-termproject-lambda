@@ -79,6 +79,18 @@ datamodel.Job"%>
 			
   
 <div class="div-2">
+<form action="SubmitBid" method="post">
+	<label for="newsletter">Would you like to submit a bid?</label>
+		<br><br>
+		<div class="full-width">
+      <label for="bid">Bid</label>
+      <input id="bid" type="text" name = "bid" />
+    </div>
+    <div class="action-button">
+      <button type="submit">Send Response</button>
+      <button type="reset">Clear Form</button>
+    </div> 
+  </form>
 	 <a href="/ContractOne/Contractor-Home.jsp" >Click Here To Return To Contractor Home</a>
 			</div>
 			<div class="container">

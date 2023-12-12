@@ -31,7 +31,7 @@ public class SubmitBid extends HttpServlet implements Info {
 		HttpSession session = request.getSession();
 		String email = (String) session.getAttribute("email");
 		String bid = request.getParameter("bid");
-		Integer id = Integer.parseInt(request.getParameter("id"));
+		Integer id = Integer.parseInt((String) session.getAttribute("name"));
 		UtilDB.createBid(id, bid, email);
 		response.sendRedirect(ContractorHome);
 	}
