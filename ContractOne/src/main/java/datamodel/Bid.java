@@ -29,6 +29,8 @@ public class Bid {
    private String amount;
    @Column(name = "contractorPointer")
    private String contractorPointer;
+   @Column(name = "status")
+   private String status;
    
    public Bid() {
    }
@@ -38,12 +40,14 @@ public class Bid {
       this.jobPointer = jobPointer;
       this.amount = amount;
       this.contractorPointer = contractorPointer;
+      this.status = "open";
    }
 
    public Bid(Integer jobPointer, String amount, String contractorPointer) {
       this.jobPointer = jobPointer;
       this.amount = amount;
       this.contractorPointer = contractorPointer;
+      this.status = "open";
    }
 
    public Integer getId() {
@@ -78,8 +82,18 @@ public class Bid {
 	   this.contractorPointer = contractorPointer;
    }
    
+   public String getStatus()
+   {
+	   return this.status;
+   }
+   
+   public void setStatus(String status)
+   {
+	   this.status = status;
+   }
+   
    @Override
    public String toString() {
-      return "Bid: " + this.id + ", " + this.jobPointer + ", " + this.amount + ", " + this.contractorPointer;
+      return "Bid: " + this.id + ", " + this.jobPointer + ", " + this.amount + ", " + this.contractorPointer + ", " + this.status;
    }
 }
