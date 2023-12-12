@@ -35,7 +35,16 @@ datamodel.Job"%>
 <div class="whitebox">
 <%
 	
-    Job currentJob = (Job) request.getAttribute("job");
+    List<Job> jobs = UtilDB.listJobs();
+    Job currentJob = null;
+    for (Job job : jobs)
+    {
+    	if(job.getId() == Integer.parseInt(request.getParameter("name")))
+    	{
+    		currentJob = job;
+    		break;
+    	}
+    }
   %>
  <% if (currentJob != null) {%>
 	

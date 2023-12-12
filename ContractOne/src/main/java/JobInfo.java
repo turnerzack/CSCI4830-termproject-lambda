@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.*; 
+import javax.servlet.http.*;
 
 import util.UtilDB;
 import datamodel.Job;
@@ -31,7 +33,6 @@ public class JobInfo extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String email = (String) session.getAttribute("email");
 		String name = request.getParameter("name");
 		List<Job> jobs = UtilDB.listJobs();
 		Job currentJob = null;
@@ -50,7 +51,10 @@ public class JobInfo extends HttpServlet {
 		}
 		else
 		{
-			session.setAttribute("job", currentJob);
+			
+			session.setAttribute("name", request.getParameter("name"));
+			RequestDispatcher rd = request.getRequestDispatcher("Job-Info.jsp");
+			rd.forward(request, response);
 			response.sendRedirect("Job-Info.jsp");
 		}
 	}
