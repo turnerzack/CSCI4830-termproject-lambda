@@ -42,7 +42,7 @@ public class JobInfo extends HttpServlet implements Info {
 		Job currentJob = null;
 		for( Job job : jobs)
 		{
-			if (job.getId() == Integer.parseInt(name))
+			if (job.getId() == Integer.parseInt(name) && job.getStatus().equalsIgnoreCase("open"))
 			{
 				currentJob = job;
 				for(Bid bid : bids)
