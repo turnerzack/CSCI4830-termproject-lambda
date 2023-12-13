@@ -35,13 +35,13 @@ public class GetBids extends HttpServlet implements Info {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.setAttribute("ID", request.getParameter("ID"));
-		String forward = "View-Job.jsp";
-		List<Job> jobs = UtilDB.listJobs();
+		String forward = ViewJob;
+		List<Job> jobs = UtilDB.listAllJobs();
 		for (Job job : jobs)
 		{
 			if(job.getId() == Integer.parseInt((String) request.getParameter("ID")) && job.getStatus().equals("open"))
 			{
-				forward = "View-Bids.jsp";
+				forward = ViewBids;
 			}
 		}
 		RequestDispatcher rd = request.getRequestDispatcher(forward);

@@ -8,4 +8,6 @@ public interface Info {
    public String CustomerHome = "Customer-Home.jsp";
    public String ContractorHome = "Contractor-Home.jsp";
    public String JobInfo = "Job-Info.jsp";
+   public String ViewBids = "View-Bids.jsp";
+   public String ViewJob = "View-Job.jsp";
 }

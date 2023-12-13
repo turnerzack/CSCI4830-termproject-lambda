@@ -81,7 +81,6 @@ public class UtilDB {
 	   }
 
    public static List<Job> listJobs() {
-
 	      List<Job> resultList = new ArrayList<Job>();
 	      Session session = getSessionFactory().openSession();
 	      Transaction tx = null;  // each process needs transaction and commit the changes in DB.
@@ -180,21 +179,16 @@ public class UtilDB {
 	   return resultList;
    }
 
-   public static List<Job> listPersonalJobs(String keyword) {
-
-	      List<Job> resultList = new ArrayList<Job>();
+   public static List<Job> listAllJobs() {
+	   List<Job> resultList = new ArrayList<Job>();
 	      Session session = getSessionFactory().openSession();
-	      Transaction tx = null;
+	      Transaction tx = null;  // each process needs transaction and commit the changes in DB.
 	      try {
 	         tx = session.beginTransaction();
-	         System.out.println((Job)session.get(Job.class, 1)); // use "get" to fetch data
 	         List<?> jobs = session.createQuery("FROM Job").list();
 	         for (Iterator<?> iterator = jobs.iterator(); iterator.hasNext();) {
 	            Job job = (Job) iterator.next();
-	            if (job.getEmail().equals(keyword));
-	            {
-	            	resultList.add(job);
-	            }
+	            resultList.add(job);
 	         }
 	         tx.commit();
 	      } catch (HibernateException e) {

@@ -82,13 +82,11 @@ public class Bid {
 	   this.contractorPointer = contractorPointer;
    }
    
-   public String getStatus()
-   {
+   public String getStatus() {
 	   return this.status;
    }
    
-   public void setStatus(String status)
-   {
+   public void setStatus(String status) {
 	   this.status = status;
    }
    
