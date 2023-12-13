@@ -12,6 +12,7 @@ import javax.servlet.http.*;
 
 import util.UtilDB;
 import util.Info;
+import datamodel.Bid;
 import datamodel.Job;
 
 /**
@@ -34,15 +35,24 @@ public class JobInfo extends HttpServlet implements Info {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		String email = (String) session.getAttribute("email");
 		String name = request.getParameter("name");
 		List<Job> jobs = UtilDB.listAllJobs();
+		List<Bid> bids = UtilDB.listBids(email);
 		Job currentJob = null;
 		for( Job job : jobs)
 		{
 			if (job.getId() == Integer.parseInt(name))
 			{
 				currentJob = job;
-				
+				for(Bid bid : bids)
+				{
+					if(job.getId() == bid.getJobPointer())
+					{
+						currentJob = null;
+						break;
+					}
+				}
 				break;
 			}
 		}
@@ -54,9 +64,9 @@ public class JobInfo extends HttpServlet implements Info {
 		{
 			
 			session.setAttribute("name", request.getParameter("name"));
-			RequestDispatcher rd = request.getRequestDispatcher(ViewBids);
+			RequestDispatcher rd = request.getRequestDispatcher(JobInfo);
 			rd.forward(request, response);
-			response.sendRedirect(ViewBids);
+			response.sendRedirect(JobInfo);
 		}
 	}
 

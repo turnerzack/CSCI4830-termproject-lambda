@@ -45,13 +45,14 @@ datamodel.Contractor"%>
     String descr;
     List<Bid> allBids = UtilDB.listBids();
 	String email = (String) session.getAttribute("email");
+	List<Job> jobs = UtilDB.listJobs(email);
     List<Bid> currBids = new ArrayList<>();
     List<Bid> archBids = new ArrayList<>();
    	Integer contID;
 
   %>
   
-  <% if (activeJobs.size() > 0) {%>
+  <% if (jobs.size() > 0) {%>
 
   <h2 align="center"></h2>
 	<table align="center" cellpadding="5" cellspacing="5" border="1">
@@ -64,7 +65,7 @@ datamodel.Contractor"%>
 	</tr>
 	<%
 	try{ 
-		for(Job currJob: activeJobs) {
+		for(Job currJob: jobs) {
 		%>
 		<tr bgcolor="#FFFFFF">
 		

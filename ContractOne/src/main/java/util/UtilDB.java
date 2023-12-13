@@ -252,6 +252,45 @@ public class UtilDB {
 	      }
 	      return resultList;
 	   }
+   
+   public static List<Job> listJobs(String keyword) {
+
+	      List<Job> resultList = new ArrayList<Job>();
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;
+	      try {
+	         tx = session.beginTransaction();
+	         System.out.println((Job)session.get(Job.class, 1)); // use "get" to fetch data
+	         List<?> jobs = session.createQuery("FROM Job").list();
+	         for (Iterator<?> jobIterator = jobs.iterator(); jobIterator.hasNext();) 
+	         {
+	        	 boolean hit = true;
+	        	 Job job = (Job) jobIterator.next();
+	            List<Bid> bids = listBids(job.getId());
+	            for (Bid bid : bids)
+		        {
+		        	 if(bid.getContractorPointer().equals(keyword) || !(job.getStatus().equalsIgnoreCase("open")))
+		        	 {
+		        		 hit = false;
+		        		 break;
+		        	 }
+		        }
+	 	        if(hit && job.getStatus().equalsIgnoreCase("open"))
+	 	        {
+	 	        	resultList.add(job);
+	 	        }
+	         }
+	        	 
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	      return resultList;
+	   }
 
    public static List<Bid> sortBidsByValue() {
 
