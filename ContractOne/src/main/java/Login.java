@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -57,9 +58,13 @@ public class Login extends HttpServlet implements Info {
 			}
 			if (fCustomer != null) {
 				session.setAttribute("email", request.getParameter("email"));
+				RequestDispatcher rd = request.getRequestDispatcher(CustomerHome);
+				rd.forward(request, response);
 				response.sendRedirect(CustomerHome);
 			} else if (fContractor != null) {
 				session.setAttribute("email", request.getParameter("email"));
+				RequestDispatcher rd = request.getRequestDispatcher(CustomerHome);
+				rd.forward(request, response);
 				response.sendRedirect(ContractorHome);
 			} else {
 				response.sendRedirect(Login);

@@ -201,6 +201,31 @@ public class UtilDB {
 	      return resultList;
 	   }
    
+   public static List<Job> listPersonalJobs(String email) {
+	   List<Job> resultList = new ArrayList<Job>();
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;  // each process needs transaction and commit the changes in DB.
+	      try {
+	         tx = session.beginTransaction();
+	         List<?> jobs = session.createQuery("FROM Job").list();
+	         for (Iterator<?> iterator = jobs.iterator(); iterator.hasNext();) {
+	            Job job = (Job) iterator.next();
+	            if(job.getEmail().equalsIgnoreCase(email))
+	            {
+	            	resultList.add(job);
+	            }
+	         }
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	      return resultList;
+	   }
+   
    public static List<Bid> listBids(String keyword) {
 
 	      List<Bid> resultList = new ArrayList<Bid>();
