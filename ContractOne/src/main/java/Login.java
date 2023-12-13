@@ -63,7 +63,7 @@ public class Login extends HttpServlet implements Info {
 				response.sendRedirect(CustomerHome);
 			} else if (fContractor != null) {
 				session.setAttribute("email", request.getParameter("email"));
-				RequestDispatcher rd = request.getRequestDispatcher(CustomerHome);
+				RequestDispatcher rd = request.getRequestDispatcher(ContractorHome);
 				rd.forward(request, response);
 				response.sendRedirect(ContractorHome);
 			} else {
