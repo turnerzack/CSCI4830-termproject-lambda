@@ -11,13 +11,14 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import util.UtilDB;
+import util.Info;
 import datamodel.Job;
 
 /**
  * Servlet implementation class JobInfo
  */
 @WebServlet("/JobInfo")
-public class JobInfo extends HttpServlet {
+public class JobInfo extends HttpServlet implements Info {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -34,7 +35,7 @@ public class JobInfo extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String name = request.getParameter("name");
-		List<Job> jobs = UtilDB.listJobs();
+		List<Job> jobs = UtilDB.listAllJobs();
 		Job currentJob = null;
 		for( Job job : jobs)
 		{
@@ -47,15 +48,15 @@ public class JobInfo extends HttpServlet {
 		}
 		if (currentJob == null)
 		{
-			response.sendRedirect("Contractor-Home.jsp");
+			response.sendRedirect(ContractorHome);
 		}
 		else
 		{
 			
 			session.setAttribute("name", request.getParameter("name"));
-			RequestDispatcher rd = request.getRequestDispatcher("View-Bids.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher(ViewBids);
 			rd.forward(request, response);
-			response.sendRedirect("View-Bids.jsp");
+			response.sendRedirect(ViewBids);
 		}
 	}
 

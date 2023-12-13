@@ -9,7 +9,9 @@ javax.servlet.http.HttpServletRequest,
 javax.servlet.http.HttpServletResponse,
 javax.servlet.http.HttpSession,
 util.UtilDB,
-datamodel.Job"%>
+datamodel.Job,
+datamodel.Bid,
+datamodel.Contractor"%>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -25,7 +27,7 @@ datamodel.Job"%>
     </head>
     <body class="content">
         <header>
-			<div id="header">
+<div id="header">
     <div id="header-content">
         <h1></h1>
         <p>Contractor Home Page</p>
@@ -33,17 +35,23 @@ datamodel.Job"%>
 </div>
 			<div class="div-1">
 				
-				<h2>See All Current Jobs Below</h2>
+				<h2>Currently Available Jobs</h2>
 			</div>
 			  <div class="whitebox">
   <%
-	List<Job> allJobs = UtilDB.listJobs();
-	List<Job> openBids = new ArrayList<>();
-	List<Job> closedBids = new ArrayList<>();
-	
-	
+	List<Job> allJobs = UtilDB.listAllJobs();
+    List<Job> activeJobs = UtilDB.listJobs();
+    String title;
+    String descr;
+    List<Bid> allBids = UtilDB.listBids();
+	String email = (String) session.getAttribute("email");
+    List<Bid> currBids = new ArrayList<>();
+    List<Bid> archBids = new ArrayList<>();
+   	Integer contID;
+
   %>
-  <% if (allJobs.size() > 0) {%>
+  
+  <% if (activeJobs.size() > 0) {%>
 
   <h2 align="center"></h2>
 	<table align="center" cellpadding="5" cellspacing="5" border="1">
@@ -56,7 +64,7 @@ datamodel.Job"%>
 	</tr>
 	<%
 	try{ 
-		for(Job currJob: allJobs) {
+		for(Job currJob: activeJobs) {
 		%>
 		<tr bgcolor="#FFFFFF">
 		
@@ -80,7 +88,7 @@ datamodel.Job"%>
   
 <div class="div-2">
 <form action="JobInfo" method="post">
-	<label for="newsletter">Which Job would you like to learn more about?</label>
+	<label for="newsletter">Which job would you like to learn more about?</label>
 		<br><br>
 		<div class="full-width">
       <label for="name">JobID</label>
@@ -92,6 +100,129 @@ datamodel.Job"%>
     </div> 
   </form>
 </div>
+<div class="div-1">
+				
+				<h2>Your Active Bids</h2>
+			</div>
+			  <div class="whitebox">
+  <%
+   	for (Contractor cont : UtilDB.listContractors()) {
+   		if (Objects.equals(cont.getEmail(), email)) {
+   			contID = cont.getId();
+   			break;
+   		}
+   	}
+   	
+   	for (Bid curr : allBids) {
+   		if (Objects.equals(curr.getContractorPointer(), email)) {
+   			if (Objects.equals(curr.getStatus(), "open")) {
+   				currBids.add(curr);
+   			}
+   			else {
+   				archBids.add(curr);
+   			}
+   		}
+   	} 
+   	if (currBids.size() > 0) {%>
+  <h2 align="center"></h2>
+	<table align="center" cellpadding="5" cellspacing="5" border="1">
+	<tr>
+	</tr>
+	<tr bgcolor="#FFFFFF">
+		<td><b> BidID </b></td>
+		<td><b> Job Title </b></td>
+		<td><b> Job Description </b></td>
+		<td><b> Amount </b></td>
+		<td><b> Status </b></td>
+	</tr>
+	<%
+	try {
+		for(Bid curr: currBids) {
+			Integer pointer = curr.getJobPointer();
+			Job job = null;
+			for (Job x : allJobs) {
+				if (Objects.equals(pointer, x.getId()) && Objects.equals(x.getStatus(), "open")) {
+					job = x;
+					break;
+				}
+			}
+		%>
+		<tr bgcolor="#FFFFFF">
+		
+		<td> <%=curr.getId()%> </td>
+		<td> <%=job.getTitle()%> </td>
+		<td> <%=job.getJobDescription()%> </td>
+		<td> <%=curr.getAmount()%> </td>
+		<td> <%=curr.getStatus()%> </td>
+		
+		</tr>
+
+		<% 
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	} %>
+		</table>
+	<% } 
+	else {
+	%> None <%}%>
+ <br>
+  </div>
+
+<div class="div-1">
+				<h2>Your Archived Bids</h2>
+			</div>
+
+			  <div class="whitebox">
+  <%
+   	if (archBids.size() > 0) {%>
+  <h2 align="center"></h2>
+	<table align="center" cellpadding="5" cellspacing="5" border="1">
+	<tr>
+	</tr>
+	<tr bgcolor="#FFFFFF">
+		<td><b> BidID </b></td>
+		<td><b> Job Title </b></td>
+		<td><b> Job Description </b></td>
+		<td><b> Amount </b></td>
+		<td><b> Status </b></td>
+	</tr>
+	<%
+	try {
+		for(Bid curr: archBids) {
+			Integer pointer = curr.getJobPointer();
+			Job job = null;
+			for (Job x : allJobs) {
+				if (Objects.equals(pointer, x.getId())) {
+					if (Objects.equals(x.getStatus(), "open")) {
+						x.setStatus("archived");
+					}
+					job = x;
+					break;
+				}
+			}
+		%>
+		<tr bgcolor="#FFFFFF">
+		
+		<td> <%=curr.getId()%> </td>
+		<td> <%=job.getTitle()%> </td>
+		<td> <%=job.getJobDescription()%> </td>
+		<td> <%=curr.getAmount()%> </td>
+		<td> <%=curr.getStatus()%> </td>
+		
+		</tr>
+
+		<% 
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	} %>
+		</table>
+	<% } 
+	else {
+	%> None <%}%>
+ <br>
+  </div>
 			<div class="container">
 			</div>
             <div class="logo text-center">
