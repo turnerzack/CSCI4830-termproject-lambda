@@ -43,7 +43,7 @@ public class UpdateJob extends HttpServlet implements Info {
 			List<Bid> bids = UtilDB.listBids(Integer.parseInt((String) session.getAttribute("ID")));
 			for (Bid bid : bids)
 			{
-				bid.setStatus("Rejected");
+				UtilDB.updateBid(bid.getId(), "Rejected");
 			}
 		}
 		response.sendRedirect(CustomerHome);

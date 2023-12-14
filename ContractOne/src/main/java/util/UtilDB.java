@@ -52,7 +52,7 @@ public class UtilDB {
          if (tx != null)
             tx.rollback();
          e.printStackTrace();
-      } finally {
+      } finally { 
          session.close();
       }
       return resultList;
@@ -546,6 +546,32 @@ public class UtilDB {
            }
 	   }
 	   session.close();
+   }
+   
+   public static void updateBid(Integer bidID, String status)
+   {
+	   Session session = getSessionFactory().openSession();
+	   Transaction tx = null;
+	   List<Bid> bids = listBids();
+	   for (Iterator<?> iterator = bids.iterator(); iterator.hasNext();) {
+           Bid bid = (Bid) iterator.next(); 
+           if (bid.getId() == bidID)
+           {
+        	   try {  
+      	         tx = session.beginTransaction();
+      	         Bid current = (Bid) session.get(Bid.class, bidID);
+      	         current.setStatus(status);
+      	         session.update(current);
+      	         tx.commit();
+      	      } catch (HibernateException e) {
+      	         if (tx != null)
+      	            tx.rollback();
+      	         e.printStackTrace();
+      	      } finally {
+      	         session.close();
+      	      }
+           }
+	   }
    }
    
    public static void updateCustomer(Customer customer, String email)
