@@ -30,8 +30,9 @@ datamodel.Job"%>
         <h1></h1>
         <p>Customer Home Page</p>
     </div>
+    <a href="/ContractOne/SettingsBridge" >Profile</a>
 </div>
-<form action = "CreateJob", method = "post">
+<form action = "CreateJob" method = "post">
 	<label for="newsletter">To Post a New Job, Fill Out the Form Below</label>
 		<br><br>
 		<div class="full-width">

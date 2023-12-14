@@ -164,7 +164,7 @@ public class UtilDB {
 	       List<?> contractors = session.createQuery("FROM Contractor").list();
 	       for (Iterator<?> iterator = contractors.iterator(); iterator.hasNext();) {
 	          Contractor contractor = (Contractor) iterator.next();
-	          if (contractor.getEmail().equals("keyword")) {
+	          if (contractor.getEmail().equals(keyword)) {
 	             resultList.add(contractor);
 	          }
 	       }
@@ -214,7 +214,7 @@ public class UtilDB {
 	       List<?> customers = session.createQuery("FROM Customer").list();
 	       for (Iterator<?> iterator = customers.iterator(); iterator.hasNext();) {
 	          Customer customer = (Customer) iterator.next();
-	          if (customer.getEmail().equals("keyword")) {
+	          if (customer.getEmail().equals(keyword)) {
 	             result = customer;
 	          }
 	       }
@@ -547,5 +547,88 @@ public class UtilDB {
 	   }
 	   session.close();
    }
+   
+   public static void updateCustomer(Customer customer, String email)
+   {
+	   Session session = getSessionFactory().openSession();
+	   Transaction tx = null;
+	   List<Customer> customers = listCustomers();
+	   for (Iterator<?> iterator = customers.iterator(); iterator.hasNext();) {
+           Customer currentCustomer = (Customer) iterator.next(); 
+           if (currentCustomer.getEmail().equalsIgnoreCase(email))
+           {
+        	   try {  
+        		   tx = session.beginTransaction();
+        		   Customer current = (Customer) session.get(Customer.class, currentCustomer.getId());
+        		   current.setName(customer.getName());
+        		   current.setAddress(customer.getAddress());
+        		   current.setPhone(customer.getPhone());
+        		   current.setEmail(customer.getEmail());
+        		   current.setDescription(customer.getDescription());
+        		   session.update(current);
+        		   tx.commit();
+      	      } catch (HibernateException e) {
+      	         if (tx != null)
+      	            tx.rollback();
+      	         e.printStackTrace();
+      	      } finally {
 
+      	      }
+           }
+	   }
+	   session.close();
+   }
+   
+   public static void updateContractor(Contractor contractor, String email)
+   {
+	   Session session = getSessionFactory().openSession();
+	   Transaction tx = null;
+	   List<Contractor> contractors = listContractors();
+	   for (Iterator<?> iterator = contractors.iterator(); iterator.hasNext();) {
+		   Contractor currentContractor = (Contractor) iterator.next(); 
+           if (currentContractor.getEmail().equalsIgnoreCase(email))
+           {
+        	   try {  
+        		   tx = session.beginTransaction();
+        		   Contractor current = (Contractor) session.get(Contractor.class, currentContractor.getId());
+        		   current.setBusiness(contractor.getBusiness());
+        		   current.setAddress(contractor.getAddress());
+        		   current.setPhone(contractor.getPhone());
+        		   current.setEmail(contractor.getEmail());
+        		   current.setDescription(contractor.getDescription());
+        		   session.update(current);
+        		   tx.commit();
+      	      } catch (HibernateException e) {
+      	         if (tx != null)
+      	            tx.rollback();
+      	         e.printStackTrace();
+      	      } finally {
+
+      	      }
+           }
+	   }
+	   session.close();
+   }
+   
+   public static boolean validateEmail(String email)
+   {
+	   boolean validEmail = true;
+	   List<Customer> customers = listCustomers();
+	   for (Customer customer : customers)
+	   {
+		   if(customer.getEmail().equalsIgnoreCase(email))
+		   {
+			   validEmail = false;
+		   }
+	   }
+	   List<Contractor> contractors = listContractors();
+	   for (Contractor contractor : contractors)
+	   {
+		   if(contractor.getEmail().equalsIgnoreCase(email))
+		   {
+			   validEmail = false;
+		   }
+	   }
+	   return validEmail;
+   }
 }

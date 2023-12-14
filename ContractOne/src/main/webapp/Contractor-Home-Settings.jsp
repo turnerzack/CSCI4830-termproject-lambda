@@ -52,6 +52,36 @@ datamodel.Contractor"%>
             <div class="logo text-center">
                 <h2></h2>
             </div>
+            <div class="div-2">
+	<form action="UpdateProfile" method="post">
+	<label for="newsletter">Enter your updated information</label>
+		<br><br>
+		<div class="full-width">
+      <label for="newUser">Business</label>
+      <input id="newUser" type="text" name = "newUser" />
+    </div>
+    <div class="full-width">
+      <label for="newAddress">Address</label>
+      <input id="newAddress" type="text" name = "newAddress" />
+    </div>
+    <div class="full-width">
+      <label for="newPhone">Phone Number</label>
+      <input id="newPhone" type="text" name = "newPhone" />
+    </div>
+    <div class="full-width">
+      <label for="newEmail">Email</label>
+      <input id="newEmail" type="text" name = "newEmail" />
+    </div>
+    <div class="full-width">
+      <label for="newDescription">Description</label>
+      <input id="newDescription" type="text" name = "newDescription" />
+    </div>
+    <div class="action-button">
+      <button type="submit">Send Response</button>
+      <button type="reset">Clear Form</button>
+    </div> 
+  </form>
+	</div>
         </header>
             <div class="row">
                 <div class="copyright-box">
