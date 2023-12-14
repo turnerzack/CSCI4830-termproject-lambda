@@ -164,7 +164,7 @@ public class UtilDB {
 	       List<?> contractors = session.createQuery("FROM Contractor").list();
 	       for (Iterator<?> iterator = contractors.iterator(); iterator.hasNext();) {
 	          Contractor contractor = (Contractor) iterator.next();
-	          if (contractor.getEmail().startsWith(keyword)) {
+	          if (contractor.getEmail().equals("keyword")) {
 	             resultList.add(contractor);
 	          }
 	       }
@@ -177,6 +177,56 @@ public class UtilDB {
 	       session.close();
 	   }
 	   return resultList;
+   }
+   
+   public static Contractor getContractor(String keyword) {
+	   Contractor result = null;;
+	   Session session = getSessionFactory().openSession();
+	   Transaction tx = null;
+	   try {
+		   tx = session.beginTransaction();
+	       System.out.println((Contractor)session.get(Contractor.class, 1)); // use "get" to fetch data
+	       List<?> contractors = session.createQuery("FROM Contractor").list();
+	       for (Iterator<?> iterator = contractors.iterator(); iterator.hasNext();) {
+	          Contractor contractor = (Contractor) iterator.next();
+	          if (contractor.getEmail().equalsIgnoreCase(keyword)) {
+	             result = contractor;
+	          }
+	       }
+	       tx.commit();
+	   } catch (HibernateException e) {
+	       if (tx != null)
+	          tx.rollback();
+	       e.printStackTrace();
+	   } finally {
+	       session.close();
+	   }
+	   return result;
+   }
+   
+   public static Customer getCustomer(String keyword) {
+	   Customer result = null;;
+	   Session session = getSessionFactory().openSession();
+	   Transaction tx = null;
+	   try {
+		   tx = session.beginTransaction();
+	       System.out.println((Customer)session.get(Customer.class, 1)); // use "get" to fetch data
+	       List<?> customers = session.createQuery("FROM Customer").list();
+	       for (Iterator<?> iterator = customers.iterator(); iterator.hasNext();) {
+	          Customer customer = (Customer) iterator.next();
+	          if (customer.getEmail().equals("keyword")) {
+	             result = customer;
+	          }
+	       }
+	       tx.commit();
+	   } catch (HibernateException e) {
+	       if (tx != null)
+	          tx.rollback();
+	       e.printStackTrace();
+	   } finally {
+	       session.close();
+	   }
+	   return result;
    }
 
    public static List<Job> listAllJobs() {

@@ -32,6 +32,7 @@ datamodel.Contractor"%>
         <h1></h1>
         <p>Contractor Home Page</p>
     </div>
+    <a href="/ContractOne/SettingsBridge" >Profile</a>
 </div>
 			<div class="div-1">
 				

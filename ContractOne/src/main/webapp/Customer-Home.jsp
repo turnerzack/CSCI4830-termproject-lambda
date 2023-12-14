@@ -56,7 +56,7 @@ datamodel.Job"%>
 			  <div class="whitebox">
     <h1>Current Jobs</h1>
   <%
-	List<Job> allJobs = UtilDB.listPersonalJobs(request.getParameter("email"));
+	List<Job> allJobs = UtilDB.listPersonalJobs((String) session.getAttribute("email"));
 	List<Job> openJobs = new ArrayList<>();
 	List<Job> closedJobs = new ArrayList<>();
 	
