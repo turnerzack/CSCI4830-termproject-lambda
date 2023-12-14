@@ -37,6 +37,12 @@ public class GetBids extends HttpServlet implements Info {
 		session.setAttribute("ID", request.getParameter("ID"));
 		String forward = ViewJob;
 		List<Job> jobs = UtilDB.listAllJobs();
+		if(request.getParameter("ID").isEmpty())
+		{
+			RequestDispatcher rd = request.getRequestDispatcher(CustomerHome);
+			rd.forward(request, response);
+			response.sendRedirect(CustomerHome);
+		}
 		for (Job job : jobs)
 		{
 			if(job.getId() == Integer.parseInt((String) request.getParameter("ID")) && job.getStatus().equals("open"))

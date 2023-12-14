@@ -34,7 +34,10 @@ public class CreateJob extends HttpServlet implements Info {
 		String email = (String) session.getAttribute("email");
 		String title = request.getParameter("title");
 		String description = request.getParameter("message");
-		UtilDB.createJob(title, email, description);
+		if(!title.isEmpty() && !description.isEmpty())
+		{
+			UtilDB.createJob(title, email, description);
+		}
 		RequestDispatcher rd = request.getRequestDispatcher(CustomerHome);
 		rd.forward(request, response);
 		response.sendRedirect(CustomerHome);
