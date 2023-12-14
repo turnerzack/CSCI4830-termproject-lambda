@@ -40,6 +40,12 @@ public class JobInfo extends HttpServlet implements Info {
 		List<Job> jobs = UtilDB.listAllJobs();
 		List<Bid> bids = UtilDB.listBids(email);
 		Job currentJob = null;
+		if(name.isEmpty())
+		{
+			RequestDispatcher rd = request.getRequestDispatcher(ContractorHome);
+			rd.forward(request, response);
+			response.sendRedirect(ContractorHome);
+		}
 		for( Job job : jobs)
 		{
 			if (job.getId() == Integer.parseInt(name) && job.getStatus().equalsIgnoreCase("open"))
