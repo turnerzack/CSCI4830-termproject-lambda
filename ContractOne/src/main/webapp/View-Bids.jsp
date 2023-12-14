@@ -25,6 +25,13 @@ datamodel.Contractor"%>
         
         <link href="css/main.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <style>
+    .div-2 {
+        width: 50%; /* You can adjust the width as needed */
+        margin: 0 auto; /* This centers the div horizontally */
+        /* Additional styles if needed */
+    }
+</style>
     </head>
     <body class="content">
         <header>

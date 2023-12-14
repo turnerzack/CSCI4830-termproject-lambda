@@ -22,6 +22,18 @@ datamodel.Job"%>
         <!-- Custom styles for this template -->
         <link href="css/main.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <style>
+    .div-2 {
+        width: 50%; /* You can adjust the width as needed */
+        margin: 0 auto; /* This centers the div horizontally */
+        /* Additional styles if needed */
+    }
+    .why {
+        width: 50%; /* You can adjust the width as needed */
+        margin: 0 auto; /* This centers the div horizontally */
+        /* Additional styles if needed */
+    }
+</style>
     </head>
     <body class="content">
         <header>
@@ -32,6 +44,7 @@ datamodel.Job"%>
     </div>
     <a href="/ContractOne/SettingsBridge" >Profile</a>
 </div>
+<div class = "why">
 <form action = "CreateJob" method = "post">
 	<label for="newsletter">To Post a New Job, Fill Out the Form Below</label>
 		<br><br>
@@ -50,6 +63,7 @@ datamodel.Job"%>
       <button type="reset">Clear Form</button>
     </div>
   </form>
+  </div>
 <br><br>
 			<div class="div-1">
 				<h2>Review All Current and Past Jobs Below</h2>

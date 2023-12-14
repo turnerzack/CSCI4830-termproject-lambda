@@ -45,6 +45,8 @@ body {
 .div-2 {
    color: rgb(240, 119, 45);
   text-decoration: none;
+  width: 50%;
+  margin: 0 auto;
 
 }
 
@@ -132,7 +134,7 @@ form {
     margin-top: 10px;
     text-align: center;
 }
-form2 {
+.form2 {
   box-sizing: border-box;
   padding: 15px;
   border-radius: 15px;
